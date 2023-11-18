@@ -5,8 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeSnipperManager1a"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Code Snippet Manager" Height="450" Width="800">
+
+
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/CodeSnipperManager1a;component/Assets/background.png"/>
+        </Grid.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.ColumnSpan="2" Background="White" BorderBrush="Black" BorderThickness="0,1,0,1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Border BorderBrush="black" BorderThickness="1" CornerRadius="15" 
+                            Width="177" Height="27">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Text="Search" Style="{StaticResource SearchBox}" Grid.ColumnSpan="2"/>
+                            <Label Grid.Column="1" Content="X" Foreground="#FF0000" FontWeight="SemiBold" Margin="66,-1,-36,0"/>
+                        </Grid>
+                    </Border>
+                    <Image Source="Assets/search.png"/>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Image Source="Assets/profile.png" Height="33" Width="37"/>
+                <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="5,0,0,0">
+                    <Label Content="+" Foreground="White" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,-18,0,0"/>
+                </Border>  
+                
+                <Border Name="btUpdate" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="5,0,0,0">
+                    <Image Source="Assets/update.png" Margin="4,3,4,3"/>
+                </Border>
+                
+                <Border Name="btDelete" Visibility="Hidden" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="5,0,0,0">
+                    <Image Source="Assets/delete.png" Margin="2,2,2,2"/>
+                </Border>
+            </StackPanel>
+            <Image Source="Assets/filter.png" Margin="154,7,220,7" Grid.Column="1"/>
+        </Grid>
 
     </Grid>
 </Window>

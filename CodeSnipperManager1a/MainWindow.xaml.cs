@@ -23,6 +23,7 @@ namespace CodeSnipperManager1a
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }
