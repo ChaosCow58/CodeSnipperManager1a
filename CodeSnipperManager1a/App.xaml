@@ -7,6 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/SearchBox.xaml"/>
+                <ResourceDictionary Source="Resources/TitleBox.xaml"/>
+                <ResourceDictionary Source="Resources/DescriptionBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

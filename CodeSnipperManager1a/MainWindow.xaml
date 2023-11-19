@@ -8,7 +8,6 @@
         Title="Code Snippet Manager" Height="450" Width="800">
 
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="37"/>
@@ -35,8 +34,8 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Text="Search" Style="{StaticResource SearchBox}" Grid.ColumnSpan="2"/>
-                            <Label Grid.Column="1" Content="X" Foreground="#FF0000" FontWeight="SemiBold" Margin="66,-1,-36,0"/>
+                            <TextBox Name="tbSearchBox" Text="Search" Style="{StaticResource SearchBox}" Grid.ColumnSpan="2"/>
+                            <Label Grid.Column="1" Content="X" Foreground="#FF0000" FontWeight="SemiBold" Margin="66,-1,-36,0" MouseDown="Clear_MouseDown"/>
                         </Grid>
                     </Border>
                     <Image Source="Assets/search.png"/>
@@ -45,15 +44,15 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Image Source="Assets/profile.png" Height="33" Width="37"/>
-                <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="5,0,0,0">
+                <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="16,0,0,0" MouseUp="Add_MouseUp">
                     <Label Content="+" Foreground="White" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,-18,0,0"/>
                 </Border>  
                 
-                <Border Name="btUpdate" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="5,0,0,0">
+                <Border Name="btUpdate" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0">
                     <Image Source="Assets/update.png" Margin="4,3,4,3"/>
                 </Border>
                 
-                <Border Name="btDelete" Visibility="Hidden" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="5,0,0,0">
+                <Border Name="btDelete" Visibility="Hidden" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0">
                     <Image Source="Assets/delete.png" Margin="2,2,2,2"/>
                 </Border>
             </StackPanel>
