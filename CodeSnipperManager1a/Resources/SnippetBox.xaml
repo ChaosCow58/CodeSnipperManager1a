@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style TargetType="TextBox" x:Key="SearchBox">
+    <Style TargetType="TextBox" x:Key="SnippetBox">
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="#727272"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Margin" Value="10,3,44,2"/>
+        <Setter Property="Foreground" Value="#868686"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Margin" Value="5"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -15,29 +15,26 @@
 
                         <Grid>
                             <TextBox VerticalAlignment="Stretch"
-                                     VerticalContentAlignment="Center"
                                      HorizontalAlignment="Stretch"
-                                     x:Name="SearchBox"
+                                     x:Name="SnippetBox"
                                      TextWrapping="NoWrap"
-                                     
-                                     Width="350"
                                      BorderThickness="0"
                                      Foreground="Black"
-                                     Margin="10,0,44,0"
-                                     Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                     AcceptsReturn="True"
+                                     AcceptsTab="True"
+                                     Margin="3"
+                                     Text="{Binding Snippet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
 
-                            <TextBlock x:Name="SearchBlock" IsHitTestVisible="False"
-                                       Text="Search"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Left"
-                                       Margin="10,3,44,4"
+                            <TextBlock x:Name="SnippetBlock" IsHitTestVisible="False"
+                                       Text="Enter a Code Snippet"
+                                       Margin="3"
                                        Foreground="#727272">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=SnippetBox}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>

@@ -35,7 +35,7 @@ namespace CodeSnipperManager1a
         public AddSnippet()
         {
             InitializeComponent();
-            GenerateComboBox();
+            GenerateComboBox(cbProgramLang);
             
         }
 
@@ -49,7 +49,7 @@ namespace CodeSnipperManager1a
             this.Close();
         }
 
-        private void GenerateComboBox()
+        public void GenerateComboBox(ComboBox comboBox)
         {
             string filePath = @"Jsons/programmingLangs.json";
   
@@ -66,7 +66,7 @@ namespace CodeSnipperManager1a
                         if (lang.type == "programming" && lang.extensions != null && lang.extensions.Length > 0)
                         {
 
-                            cbProgramLang.Items.Add($"{lang.name} ({lang.extensions[0]})");
+                            comboBox.Items.Add($"{lang.name} ({lang.extensions[0]})");
                         }
                     }
                 }

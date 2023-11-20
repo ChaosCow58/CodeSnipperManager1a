@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Resources/SearchBox.xaml"/>
                 <ResourceDictionary Source="Resources/TitleBox.xaml"/>
                 <ResourceDictionary Source="Resources/DescriptionBox.xaml"/>
+                <ResourceDictionary Source="Resources/SnippetBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

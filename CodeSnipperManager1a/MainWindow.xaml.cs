@@ -13,6 +13,9 @@ namespace CodeSnipperManager1a
     {
         // Style serachBoxStyle;
         private AddSnippet addWindow;
+        private UpdateSnippet updateWindow;
+        private DeleteSnippet deleteWindow;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +41,24 @@ namespace CodeSnipperManager1a
             addWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             addWindow.ShowDialog();
 
+        }
+
+        private void Update_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            updateWindow = new UpdateSnippet();
+
+            updateWindow.Owner = null;
+            updateWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            updateWindow.ShowDialog();
+        }
+
+        private void Delete_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            deleteWindow = new DeleteSnippet();
+
+            deleteWindow.Owner = null;
+            deleteWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            deleteWindow.ShowDialog();
         }
     }
 }
