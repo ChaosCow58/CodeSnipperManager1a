@@ -40,7 +40,7 @@ namespace CodeSnipperManager1a
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ControlTemplate? c = collection["SearchTemplate"];
+            ControlTemplate? c = resourceDictionary[""] as ControlTemplate;
            
             Debug.WriteLine(c);
         }
