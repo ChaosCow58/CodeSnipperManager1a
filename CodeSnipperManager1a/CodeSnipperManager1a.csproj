@@ -14,6 +14,7 @@
     <None Remove="Assets\profile.png" />
     <None Remove="Assets\search.png" />
     <None Remove="Assets\update.png" />
+    <None Remove="Jsons\programmingLangs.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,10 +24,7 @@
     <Resource Include="Assets\profile.png" />
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Jsons\" />
+    <Resource Include="Jsons\programmingLangs.json" />
   </ItemGroup>
 
   <ItemGroup>

@@ -255,7 +255,7 @@
     ]
   },
   {
-    "name": "Brainfuck",
+    "name": "Brainf*ck",
     "type": "programming",
     "extensions": [
       ".b",
@@ -677,6 +677,14 @@
     ]
   },
   {
+    "name": "eC",
+    "type": "programming",
+    "extensions": [
+      ".ec",
+      ".eh"
+    ]
+  },
+  {
     "name": "ECL",
     "type": "programming",
     "extensions": [
@@ -764,6 +772,13 @@
       ".fs",
       ".fsi",
       ".fsx"
+    ]
+  },
+  {
+    "name": "fish",
+    "type": "programming",
+    "extensions": [
+      ".fish"
     ]
   },
   {
@@ -1851,6 +1866,13 @@
     ]
   },
   {
+    "name": "mupad",
+    "type": "programming",
+    "extensions": [
+      ".mu"
+    ]
+  },
+  {
     "name": "Myghty",
     "type": "programming",
     "extensions": [
@@ -1877,6 +1899,13 @@
     "extensions": [
       ".nsi",
       ".nsh"
+    ]
+  },
+  {
+    "name": "nesC",
+    "type": "programming",
+    "extensions": [
+      ".nc"
     ]
   },
   {
@@ -1969,6 +1998,13 @@
       ".numpy",
       ".numpyw",
       ".numsc"
+    ]
+  },
+  {
+    "name": "ooc",
+    "type": "programming",
+    "extensions": [
+      ".ooc"
     ]
   },
   {
@@ -3092,10 +3128,26 @@
     ]
   },
   {
+    "name": "wisp",
+    "type": "programming",
+    "extensions": [
+      ".wisp"
+    ]
+  },
+  {
     "name": "X10",
     "type": "programming",
     "extensions": [
       ".x10"
+    ]
+  },
+  {
+    "name": "xBase",
+    "type": "programming",
+    "extensions": [
+      ".prg",
+      ".ch",
+      ".prw"
     ]
   },
   {
@@ -3306,46 +3358,10 @@
     ]
   },
   {
-    "name": "eC",
-    "type": "programming",
-    "extensions": [
-      ".ec",
-      ".eh"
-    ]
-  },
-  {
     "name": "edn",
     "type": "data",
     "extensions": [
       ".edn"
-    ]
-  },
-  {
-    "name": "fish",
-    "type": "programming",
-    "extensions": [
-      ".fish"
-    ]
-  },
-  {
-    "name": "mupad",
-    "type": "programming",
-    "extensions": [
-      ".mu"
-    ]
-  },
-  {
-    "name": "nesC",
-    "type": "programming",
-    "extensions": [
-      ".nc"
-    ]
-  },
-  {
-    "name": "ooc",
-    "type": "programming",
-    "extensions": [
-      ".ooc"
     ]
   },
   {
@@ -3356,22 +3372,6 @@
       ".rest",
       ".rest.txt",
       ".rst.txt"
-    ]
-  },
-  {
-    "name": "wisp",
-    "type": "programming",
-    "extensions": [
-      ".wisp"
-    ]
-  },
-  {
-    "name": "xBase",
-    "type": "programming",
-    "extensions": [
-      ".prg",
-      ".ch",
-      ".prw"
     ]
   }
 ]

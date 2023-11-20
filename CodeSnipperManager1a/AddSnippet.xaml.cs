@@ -22,9 +22,9 @@ namespace CodeSnipperManager1a
 
     public class Item 
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string[] Extensions { get; set; }
+        public string? name { get; set; }
+        public string? type { get; set; }
+        public string[]? extensions { get; set; }
     }
 
     /// <summary>
@@ -49,18 +49,32 @@ namespace CodeSnipperManager1a
             this.Close();
         }
 
-        private void GenerateComboBox() 
+        private void GenerateComboBox()
         {
-
-            string text = File.ReadAllText("Jsons/programmingLangs.json");
-            Console.WriteLine(text);
-            var langs = System.Text.Json.JsonSerializer.Deserialize<List<Item>>(text);
-            foreach (var lang in langs)
+            string filePath = @"Jsons/programmingLangs.json";
+  
+            if (File.Exists(filePath))
             {
-                Console.WriteLine("*" + lang == "" ? "is null" : lang);
+                string text = File.ReadAllText(filePath);
+
+                List<Item>? langs = JsonConvert.DeserializeObject<List<Item>>(text);
+
+                if (langs != null)
+                {
+                    foreach (Item lang in langs)
+                    {
+                        if (lang.type == "programming" && lang.extensions != null && lang.extensions.Length > 0)
+                        {
+
+                            cbProgramLang.Items.Add($"{lang.name} ({lang.extensions[0]})");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"File not found: {filePath}");
             }
         }
-
-
     }
 }
