@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -51,29 +52,42 @@ namespace CodeSnipperManager1a
 
         public void GenerateComboBox(ComboBox comboBox)
         {
-            string filePath = @"Jsons/programmingLangs.json";
+            string filePath = @"CodeSnipperManager1a.Jsons.programmingLangs.json";
+            string jsonContent = ReadEmbeddedResource(filePath);
   
-            if (File.Exists(filePath))
+              
+            List<Item>? langs = JsonConvert.DeserializeObject<List<Item>>(jsonContent);
+
+            if (langs != null)
             {
-                string text = File.ReadAllText(filePath);
-
-                List<Item>? langs = JsonConvert.DeserializeObject<List<Item>>(text);
-
-                if (langs != null)
+                foreach (Item lang in langs)
                 {
-                    foreach (Item lang in langs)
+                    if (lang.type == "programming" && lang.extensions != null && lang.extensions.Length > 0)
                     {
-                        if (lang.type == "programming" && lang.extensions != null && lang.extensions.Length > 0)
-                        {
 
-                            comboBox.Items.Add($"{lang.name} ({lang.extensions[0]})");
-                        }
+                        comboBox.Items.Add($"{lang.name} ({lang.extensions[0]})");
                     }
                 }
             }
-            else
+            
+           
+        }
+
+        private string ReadEmbeddedResource(string resourceName) 
+        { 
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            using (Stream? stream = assembly.GetManifestResourceStream(resourceName)) 
             {
-                Debug.WriteLine($"File not found: {filePath}");
+                if (stream == null) 
+                {
+                    throw new InvalidOperationException($"Resource '{resourceName}' not found.");
+                }
+
+                using (StreamReader r = new StreamReader(stream)) 
+                { 
+                    return r.ReadToEnd();
+                }
             }
         }
     }

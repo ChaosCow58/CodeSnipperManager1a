@@ -24,7 +24,7 @@
     <Resource Include="Assets\profile.png" />
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />
-    <Resource Include="Jsons\programmingLangs.json" />
+    <EmbeddedResource Include="Jsons\programmingLangs.json" />
   </ItemGroup>
 
   <ItemGroup>

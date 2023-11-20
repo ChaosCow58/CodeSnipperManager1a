@@ -258,8 +258,8 @@
     "name": "Brainf*ck",
     "type": "programming",
     "extensions": [
-      ".b",
-      ".bf"
+      ".bf",
+      ".b"
     ]
   },
   {
