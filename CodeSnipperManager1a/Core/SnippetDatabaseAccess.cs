@@ -67,14 +67,14 @@ namespace CodeSnipperManager1a.Core
             return results.ToList();
         }
 
-        public Task CreateStore(Snippet snippet) 
+        public Task CreateSnippet(Snippet snippet) 
         {
             IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
 
             return snippets.InsertOneAsync(snippet);
         }
 
-        public Task UpdateStore(Snippet snippet) 
+        public Task UpdateSnippet(Snippet snippet) 
         {
             IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
             FilterDefinition<Snippet> filter = Builders<Snippet>.Filter.Eq(s => s.Id, snippet.Id);
@@ -85,7 +85,7 @@ namespace CodeSnipperManager1a.Core
         /*
          TODO: Move to a junk database then delete it over time
          */
-        public Task DeleteStore(Snippet snippet) 
+        public Task DeleteSnippet(Snippet snippet) 
         {
             IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
             FilterDefinition<Snippet> filter = Builders<Snippet>.Filter.Eq(s => s.Id, snippet.Id);
