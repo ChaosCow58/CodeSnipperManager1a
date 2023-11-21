@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using CodeSnipperManager1a.Core;
+using CodeSnipperManager1a.MVVM.Model;
 
 namespace CodeSnipperManager1a
 {
@@ -26,17 +27,36 @@ namespace CodeSnipperManager1a
     /// </summary>
     public partial class AddSnippet : Window
     {
+        private Snippet SnippetModel;
+
+        private TextBox TitleTextBox;
+        private TextBox DescriptionTextBox;
+        private TextBox CodeSnippetBox;
+
+
         public AddSnippet()
         {
             InitializeComponent();
             ToolBox.GenerateComboBox(cbProgramLang);
-            
+
+            TitleTextBox = ToolBox.FindTextBox("TitleBox", tbTitleBox);
+            DescriptionTextBox = ToolBox.FindTextBox("DescriptionBox", tbDescriptionBox);
+            CodeSnippetBox = ToolBox.FindTextBox("SnippetBox", tbCodeSnippet);
         }
 
         private void AddToMain_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (CheckTextBoxes())
             {
+                Debug.WriteLine(ParseComboBox());
+             /*   SnippetModel = new Snippet()
+                {
+                    Title = TitleTextBox.Text,
+                    Description = DescriptionTextBox.Text == "" ? "No Description" : DescriptionTextBox.Text,
+                    
+                };*/
+
+
                 this.Close();
             }
         }
@@ -46,6 +66,27 @@ namespace CodeSnipperManager1a
             this.Close();
         }
 
+        private string ParseComboBox() 
+        {
+            List<Item> items = ToolBox.GetJson();
+            string name = "";
+
+            if (cbProgramLang.SelectedValue != null) 
+            {
+                for (int i = 0; i < cbProgramLang.SelectedValue.ToString().Length; i++)
+                {
+
+                    if (cbProgramLang.SelectedValue.ToString() == $"{items[i].name} ({items[i].extensions[0]})")
+                    {
+                        name += cbProgramLang.SelectedValue.ToString().Substring(0, items[i].extensions[0].Length);
+                    }
+                }
+            }
+          
+
+            return name;
+        }
+
         private bool CheckTextBoxes()
         {
             bool TitleBoxError = false;
@@ -53,17 +94,12 @@ namespace CodeSnipperManager1a
             bool ProgrammingLangError = false;
 
             TextBox TitleTextBox = ToolBox.FindTextBox("TitleBox", tbTitleBox);
-            TextBox DescriptionTextBox = ToolBox.FindTextBox("DescriptionBox", tbDescriptionBox);
             TextBox CodeSnippetBox = ToolBox.FindTextBox("SnippetBox", tbCodeSnippet);
 
             if (TitleTextBox.Text == "")
             {
                 TitleBoxError = true;
                 bTitle.BorderBrush = Brushes.Red;
-            }
-            if (DescriptionTextBox.Text == "")
-            {
-                // DescriptionTextBox.Text = "No Description";
             }
             if (cbProgramLang.SelectedValue == null) 
             {

@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace CodeSnipperManager1a.Core
 {
-    internal class Item
+    public class Item
     {
         public string? name { get; set; }
         public string? type { get; set; }
@@ -40,6 +40,17 @@ namespace CodeSnipperManager1a.Core
                     }
                 }
             }
+        }       
+        
+        public static List<Item> GetJson()
+        {
+            string filePath = @"CodeSnipperManager1a.Jsons.programmingLangs.json";
+            string jsonContent = ReadEmbeddedResource(filePath);
+
+
+            List<Item> langs = JsonConvert.DeserializeObject<List<Item>>(jsonContent);
+
+            return langs;
         }
 
         public static string ReadEmbeddedResource(string resourceName)
