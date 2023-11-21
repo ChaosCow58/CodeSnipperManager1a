@@ -73,12 +73,13 @@ namespace CodeSnipperManager1a
 
             if (cbProgramLang.SelectedValue != null) 
             {
-                for (int i = 0; i < cbProgramLang.SelectedValue.ToString().Length; i++)
+                for (int i = 0; i < items.Count; i++)
                 {
 
                     if (cbProgramLang.SelectedValue.ToString() == $"{items[i].name} ({items[i].extensions[0]})")
                     {
                         name += cbProgramLang.SelectedValue.ToString().Substring(0, items[i].extensions[0].Length);
+                        break;
                     }
                 }
             }
