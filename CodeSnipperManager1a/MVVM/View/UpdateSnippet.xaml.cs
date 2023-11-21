@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CodeSnipperManager1a.Core;
 
 namespace CodeSnipperManager1a
 {
@@ -19,14 +20,11 @@ namespace CodeSnipperManager1a
     /// </summary>
     public partial class UpdateSnippet : Window
     {
-        private AddSnippet addSnippet; 
 
         public UpdateSnippet()
         {
             InitializeComponent();
-
-            addSnippet = new AddSnippet();
-            addSnippet.GenerateComboBox(cbProgramLang);
+            ToolBox.GenerateComboBox(cbProgramLang);
         }
 
         private void SaveToMain_MouseUp(object sender, MouseButtonEventArgs e)

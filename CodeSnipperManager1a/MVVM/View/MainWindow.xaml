@@ -38,25 +38,25 @@
                             <Label Grid.Column="1" Content="X" Foreground="#FF0000" FontWeight="SemiBold" Margin="66,-1,-36,0" MouseDown="Clear_MouseDown"/>
                         </Grid>
                     </Border>
-                    <Image Source="Assets/search.png"/>
+                    <Image Source="../../Assets/search.png"/>
                 </StackPanel>
             </Border>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Image Source="Assets/profile.png" Height="33" Width="37"/>
+                <Image Source="../../Assets/profile.png" Height="33" Width="37"/>
                 <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="16,0,0,0" MouseUp="Add_MouseUp">
                     <Label Content="+" Foreground="White" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,-18,0,0"/>
                 </Border>  
                 
                 <Border Name="btUpdate" Visibility="Visible" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Update_MouseUp">
-                    <Image Source="Assets/update.png" Margin="4,3,4,3"/>
+                    <Image Source="../../Assets/update.png" Margin="4,3,4,3"/>
                 </Border>
                 
                 <Border Name="btDelete" Visibility="Visible" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Delete_MouseUp">
-                    <Image Source="Assets/delete.png" Margin="2,2,2,2"/>
+                    <Image Source="../../Assets/delete.png" Margin="2,2,2,2"/>
                 </Border>
             </StackPanel>
-            <Image Source="Assets/filter.png" Margin="154,7,220,7" Grid.Column="1"/>
+            <Image Source="../../Assets/filter.png" Margin="154,7,220,7" Grid.Column="1"/>
         </Grid>
 
     </Grid>

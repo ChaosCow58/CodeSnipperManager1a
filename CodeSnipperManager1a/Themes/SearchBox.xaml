@@ -9,7 +9,7 @@
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate x:Key="SearchTemplate" TargetType="{x:Type TextBox}">
+                <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border>
 
 

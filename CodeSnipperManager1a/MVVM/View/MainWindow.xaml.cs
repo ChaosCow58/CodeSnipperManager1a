@@ -35,14 +35,14 @@ namespace CodeSnipperManager1a
         {
             InitializeComponent();
             resourceDictionary = new ResourceDictionary();
-            resourceDictionary.Source = new System.Uri(@"Resources/SearchBox.xaml", System.UriKind.Relative);
+            resourceDictionary.Source = new System.Uri(@"Themes/SearchBox.xaml", System.UriKind.Relative);
         }
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ControlTemplate? c = resourceDictionary[""] as ControlTemplate;
+         /*   ControlTemplate? c = resourceDictionary[""] as ControlTemplate;
            
-            Debug.WriteLine(c);
+            Debug.WriteLine(c);*/
         }
 
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
