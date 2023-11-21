@@ -33,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
     <Folder Include="MVVM\ModelView\" />
   </ItemGroup>
 

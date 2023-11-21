@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
+using CodeSnipperManager1a.MVVM.Model;
+
 using MongoDB.Driver;
 using MongoDB.Bson;
 
@@ -44,7 +46,51 @@ namespace CodeSnipperManager1a.Core
             }
         }
 
+        private IMongoCollection<T> GetDBCollection<T>(string collection) 
+        {
+            return database.GetCollection<T>(collection);
+        }
 
+        public async Task<List<Snippet>> GetSnippets() 
+        {
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            IAsyncCursor<Snippet> results = await snippets.FindAsync(_ => true );
 
+            return results.ToList();
+        }  
+        
+        public async Task<List<Snippet>> GetSnippet(string SnippetTitle) 
+        {
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            IAsyncCursor<Snippet> results = await snippets.FindAsync(snippet => snippet.Title == SnippetTitle);
+
+            return results.ToList();
+        }
+
+        public Task CreateStore(Snippet snippet) 
+        {
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+
+            return snippets.InsertOneAsync(snippet);
+        }
+
+        public Task UpdateStore(Snippet snippet) 
+        {
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            FilterDefinition<Snippet> filter = Builders<Snippet>.Filter.Eq(s => s.Id, snippet.Id);
+
+            return snippets.ReplaceOneAsync(filter, snippet, new ReplaceOptions {IsUpsert = true});
+        }
+
+        /*
+         TODO: Move to a junk database then delete it over time
+         */
+        public Task DeleteStore(Snippet snippet) 
+        {
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            FilterDefinition<Snippet> filter = Builders<Snippet>.Filter.Eq(s => s.Id, snippet.Id);
+
+            return snippets.DeleteOneAsync(filter);
+        }
     }
 }
