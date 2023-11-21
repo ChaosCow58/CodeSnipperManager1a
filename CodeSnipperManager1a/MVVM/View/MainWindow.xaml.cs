@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeSnipperManager1a.Core;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,35 +15,23 @@ namespace CodeSnipperManager1a
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Style serachBoxStyle;
         private AddSnippet addWindow;
         private UpdateSnippet updateWindow;
         private DeleteSnippet deleteWindow;
 
-        private ResourceDictionary resourceDictionary;
-   /*     private Dictionary<string, ControlTemplate> collection
-        {
-            get 
-            { 
-                Dictionary<string, ControlTemplate> contorls = new Dictionary<string, ControlTemplate>();
-                contorls.Add("SearchTemplate", FindName("SearchTemplate") as ControlTemplate);
-                return contorls;
-            }
-        }*/
-
-
         public MainWindow()
         {
             InitializeComponent();
-            resourceDictionary = new ResourceDictionary();
-            resourceDictionary.Source = new System.Uri(@"Themes/SearchBox.xaml", System.UriKind.Relative);
         }
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
         {
-         /*   ControlTemplate? c = resourceDictionary[""] as ControlTemplate;
-           
-            Debug.WriteLine(c);*/
+            TextBox textBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
+
+            if (textBox != null) 
+            {
+                textBox.Clear();
+            }
         }
 
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)

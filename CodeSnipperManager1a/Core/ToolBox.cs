@@ -6,7 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CodeSnipperManager1a.Core
 {
@@ -49,6 +51,30 @@ namespace CodeSnipperManager1a.Core
                     return r.ReadToEnd();
                 }
             }
+        }
+
+        public static TextBox FindTextBox(string name, DependencyObject container)
+        {
+            if (container == null) return null;
+
+            var childCount = VisualTreeHelper.GetChildrenCount(container);
+            for (int i = 0; i < childCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(container, i);
+
+                if (child is TextBox textBox && textBox.Name == name)
+                {
+                    return textBox;
+                }
+
+                var result = FindTextBox(name, child);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return null;
         }
     }
 }
