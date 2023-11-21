@@ -19,9 +19,12 @@ namespace CodeSnipperManager1a
         private UpdateSnippet updateWindow;
         private DeleteSnippet deleteWindow;
 
+        private SnippetDatabaseAccess databaseAccess;
+
         public MainWindow()
         {
             InitializeComponent();
+            databaseAccess = new SnippetDatabaseAccess();
         }
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
