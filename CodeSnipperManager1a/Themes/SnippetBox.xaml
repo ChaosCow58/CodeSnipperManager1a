@@ -26,7 +26,7 @@
                                      Text="{Binding Snippet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
 
-                            <TextBlock x:Name="SnippetBlock" IsHitTestVisible="False"
+                            <TextBlock IsHitTestVisible="False"
                                        Text="Enter a Code Snippet"
                                        Margin="3"
                                        Foreground="#727272">

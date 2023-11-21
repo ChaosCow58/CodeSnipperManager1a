@@ -41,7 +41,8 @@ namespace CodeSnipperManager1a.Core
                 Debug.WriteLine("Pinged your deployment. You successfully connected to MongoDB!");
             }
             catch (Exception ex)
-            { 
+            {
+                Debug.WriteLine("Could not connect to Database");
                 Debug.WriteLine(ex);  
             }
         }

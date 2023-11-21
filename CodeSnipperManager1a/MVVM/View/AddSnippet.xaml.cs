@@ -21,14 +21,6 @@ using CodeSnipperManager1a.Core;
 
 namespace CodeSnipperManager1a
 {
-
-    public class Item 
-    {
-        public string? name { get; set; }
-        public string? type { get; set; }
-        public string[]? extensions { get; set; }
-    }
-
     /// <summary>
     /// Interaction logic for AddSnippet.xaml
     /// </summary>
@@ -43,12 +35,84 @@ namespace CodeSnipperManager1a
 
         private void AddToMain_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            if (CheckTextBoxes())
+            {
+                this.Close();
+            }
         }
 
         private void Cancel_MouseUp(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private bool CheckTextBoxes()
+        {
+            bool TitleBoxError = false;
+            bool CodeSnippetError = false;
+            bool ProgrammingLangError = false;
+
+            TextBox TitleTextBox = ToolBox.FindTextBox("TitleBox", tbTitleBox);
+            TextBox DescriptionTextBox = ToolBox.FindTextBox("DescriptionBox", tbDescriptionBox);
+            TextBox CodeSnippetBox = ToolBox.FindTextBox("SnippetBox", tbCodeSnippet);
+
+            if (TitleTextBox.Text == "")
+            {
+                TitleBoxError = true;
+                bTitle.BorderBrush = Brushes.Red;
+            }
+            if (DescriptionTextBox.Text == "")
+            {
+                // DescriptionTextBox.Text = "No Description";
+            }
+            if (cbProgramLang.SelectedValue == null) 
+            {
+                ProgrammingLangError = true;
+                bProgramLang.BorderBrush = Brushes.Red;
+            }
+            if (CodeSnippetBox.Text == "")
+            {
+                CodeSnippetError = true;
+                bCodeSnippet.BorderBrush = Brushes.Red;
+            }
+
+            if (TitleBoxError && CodeSnippetError && ProgrammingLangError)
+            {
+                MessageBox.Show("Please enter a Title, a Snippet, and select a Programming Langauge!");
+                return false;
+            }
+            else if (TitleBoxError && CodeSnippetError)
+            {
+                MessageBox.Show("Please enter a Title and a Snippet!");
+                return false;
+            }
+            else if (TitleBoxError && ProgrammingLangError)
+            {
+                MessageBox.Show("Please enter a Title and select a Programming Langauge!");
+                return false;
+            }
+            else if (ProgrammingLangError && CodeSnippetError)
+            {
+                MessageBox.Show("Please enter a Snippet and select a Programming Langauge!");
+                return false;
+            }
+            else if (TitleBoxError)
+            {
+                MessageBox.Show("Please enter a Title!");
+                return false;
+            }
+            else if (CodeSnippetError)
+            {
+                MessageBox.Show("Please enter a Snippet!");
+                return false;
+            }
+            else if (ProgrammingLangError) 
+            {
+                MessageBox.Show("Please select a Programming Langauge!");
+                return false;
+            }
+
+            return true;
         }
     }
 }

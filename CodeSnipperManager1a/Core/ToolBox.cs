@@ -12,6 +12,13 @@ using System.Windows.Media;
 
 namespace CodeSnipperManager1a.Core
 {
+    internal class Item
+    {
+        public string? name { get; set; }
+        public string? type { get; set; }
+        public string[]? extensions { get; set; }
+    }
+
     public class ToolBox
     {
         public static void GenerateComboBox(ComboBox comboBox)

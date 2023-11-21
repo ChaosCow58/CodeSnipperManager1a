@@ -27,7 +27,7 @@
                                      Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
 
-                            <TextBlock x:Name="SearchBlock" IsHitTestVisible="False"
+                            <TextBlock IsHitTestVisible="False"
                                        Text="Search"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"

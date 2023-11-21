@@ -25,7 +25,7 @@
                                      Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
 
-                            <TextBlock x:Name="DescriptionBlock" IsHitTestVisible="False"
+                            <TextBlock IsHitTestVisible="False"
                                        Text="Enter a Description"
                                        Margin="3"
                                        Foreground="#727272">
