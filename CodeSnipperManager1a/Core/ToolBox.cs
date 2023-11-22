@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -35,7 +36,7 @@ namespace CodeSnipperManager1a.Core
                 {
                     if (lang.type == "programming" && lang.extensions != null && lang.extensions.Length > 0)
                     {
-
+                        
                         comboBox.Items.Add($"{lang.name} ({lang.extensions[0]})");
                     }
                 }
@@ -48,7 +49,7 @@ namespace CodeSnipperManager1a.Core
             string jsonContent = ReadEmbeddedResource(filePath);
 
 
-            List<Item> langs = JsonConvert.DeserializeObject<List<Item>>(jsonContent);
+            List<Item>? langs = JsonConvert.DeserializeObject<List<Item>>(jsonContent);
 
             return langs;
         }

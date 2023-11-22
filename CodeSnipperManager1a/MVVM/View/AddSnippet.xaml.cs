@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
+using MongoDB.Driver.Core.Misc;
 
 namespace CodeSnipperManager1a
 {
@@ -33,29 +34,37 @@ namespace CodeSnipperManager1a
         private TextBox DescriptionTextBox;
         private TextBox CodeSnippetBox;
 
+        private SnippetDatabaseAccess databaseAccess;
+
 
         public AddSnippet()
         {
             InitializeComponent();
             ToolBox.GenerateComboBox(cbProgramLang);
 
-            TitleTextBox = ToolBox.FindTextBox("TitleBox", tbTitleBox);
-            DescriptionTextBox = ToolBox.FindTextBox("DescriptionBox", tbDescriptionBox);
-            CodeSnippetBox = ToolBox.FindTextBox("SnippetBox", tbCodeSnippet);
+            databaseAccess = new SnippetDatabaseAccess();
+
+            
         }
 
         private void AddToMain_MouseUp(object sender, MouseButtonEventArgs e)
         {
+
+            TextBox TitleTextBox = ToolBox.FindTextBox("TitleBox", tbTitleBox);
+            TextBox DescriptionTextBox = ToolBox.FindTextBox("DescriptionBox", tbDescriptionBox);
+            TextBox CodeSnippetBox = ToolBox.FindTextBox("SnippetBox", tbCodeSnippet);
+
             if (CheckTextBoxes())
             {
-                Debug.WriteLine(ParseComboBox());
-             /*   SnippetModel = new Snippet()
+                SnippetModel = new Snippet()
                 {
                     Title = TitleTextBox.Text,
                     Description = DescriptionTextBox.Text == "" ? "No Description" : DescriptionTextBox.Text,
-                    
-                };*/
+                    ProgrammingLanguage = ParseComboBox(),
+                    CodeSnippet = CodeSnippetBox.Text
+                };
 
+                databaseAccess.CreateSnippet(SnippetModel);
 
                 this.Close();
             }
@@ -71,19 +80,22 @@ namespace CodeSnipperManager1a
             List<Item> items = ToolBox.GetJson();
             string name = "";
 
-            if (cbProgramLang.SelectedValue != null) 
+            if (items != null)
             {
-                for (int i = 0; i < items.Count; i++)
+                int i = 0;
+                foreach (Item item in items)
                 {
-
-                    if (cbProgramLang.SelectedValue.ToString() == $"{items[i].name} ({items[i].extensions[0]})")
-                    {
-                        name += cbProgramLang.SelectedValue.ToString().Substring(0, items[i].extensions[0].Length);
-                        break;
+                    if (item.extensions != null && item.extensions.Length > 0)
+                    {                      
+                        if (cbProgramLang.SelectedItem.ToString() == $"{item.name} ({item.extensions[0]})") 
+                        {
+                            name += cbProgramLang.SelectedItem.ToString().Substring(0, item.name.Length);
+                            break;
+                        }
                     }
+                    i++;
                 }
             }
-          
 
             return name;
         }

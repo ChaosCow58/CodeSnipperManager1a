@@ -59,5 +59,29 @@
             <Image Source="../../Assets/filter.png" Margin="154,7,220,7" Grid.Column="1"/>
         </Grid>
 
+
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+            <StackPanel x:Name="spDisplayPanel" Grid.Row="1" Orientation="Horizontal" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+
+                <!--<Border Margin="16,0,0,0" HorizontalAlignment="Left" Background="White" Width="330" Height="360">
+
+                </Border>
+
+                <Border Margin="16,0,0,0" HorizontalAlignment="Left"  Background="White" Width="330" Height="360">
+
+                </Border>
+
+                <Border Margin="16,0,0,0" HorizontalAlignment="Left"  Background="White" Width="330" Height="360">
+
+                </Border>
+
+                <Border Margin="16,0,0,0" HorizontalAlignment="Left"  Background="White" Width="330" Height="360">
+
+                </Border>-->
+            </StackPanel>
+        </ScrollViewer>
+
+
+
     </Grid>
 </Window>

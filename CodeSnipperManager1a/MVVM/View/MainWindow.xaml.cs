@@ -1,8 +1,10 @@
 ﻿using CodeSnipperManager1a.Core;
+using CodeSnipperManager1a.MVVM.Model;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,7 +26,24 @@ namespace CodeSnipperManager1a
         public MainWindow()
         {
             InitializeComponent();
-            //databaseAccess = new SnippetDatabaseAccess();
+            databaseAccess = new SnippetDatabaseAccess();
+
+            PopulateGrid();
+        }
+
+        private void PopulateGrid() 
+        { 
+            Task<List<Snippet>> snippets = databaseAccess.GetSnippets();
+
+            for (int i = 0;i < snippets.Result.Count;i++) 
+            { 
+                Border border = new Border();
+                border.Margin = new Thickness(16, 0, 0, 0);
+                border.HorizontalAlignment = HorizontalAlignment.Left;
+                border.Background = Brushes.White;
+                border.Width = 330;
+                border.Height = 360;
+            }
         }
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
