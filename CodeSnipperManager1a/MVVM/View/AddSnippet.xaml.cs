@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -82,7 +82,6 @@ namespace CodeSnipperManager1a
 
             if (items != null)
             {
-                int i = 0;
                 foreach (Item item in items)
                 {
                     if (item.extensions != null && item.extensions.Length > 0)
@@ -93,7 +92,6 @@ namespace CodeSnipperManager1a
                             break;
                         }
                     }
-                    i++;
                 }
             }
 
