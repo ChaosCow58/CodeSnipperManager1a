@@ -30,10 +30,6 @@ namespace CodeSnipperManager1a
     {
         private Snippet SnippetModel;
 
-        private TextBox TitleTextBox;
-        private TextBox DescriptionTextBox;
-        private TextBox CodeSnippetBox;
-
         private SnippetDatabaseAccess databaseAccess;
 
 
