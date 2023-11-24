@@ -32,6 +32,8 @@ namespace CodeSnipperManager1a
 
         private SnippetDatabaseAccess databaseAccess;
 
+        private MainWindow mainWindow;
+
 
         public AddSnippet()
         {
@@ -40,6 +42,7 @@ namespace CodeSnipperManager1a
 
             databaseAccess = new SnippetDatabaseAccess();
 
+            mainWindow = new MainWindow();
             
         }
 
@@ -61,6 +64,7 @@ namespace CodeSnipperManager1a
                 };
 
                 databaseAccess.CreateSnippet(SnippetModel);
+                mainWindow.PopulateGrid();
 
                 this.Close();
             }
