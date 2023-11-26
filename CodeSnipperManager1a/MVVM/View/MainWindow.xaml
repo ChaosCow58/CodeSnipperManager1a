@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CodeSnipperManager1a"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:CodeSnipperManager1a" xmlns:modelview="clr-namespace:CodeSnipperManager1a.MVVM.ModelView"
         Title="Code Snippet Manager" Height="450" Width="800">
-
 
     <Grid>
         <Grid.RowDefinitions>
@@ -60,33 +58,29 @@
         </Grid>
 
 
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="svDisplayScroll" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
             <StackPanel x:Name="spDisplayPanel" Grid.Row="1" Orientation="Horizontal" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-
-                <!--<Border Margin="16,0,0,0" HorizontalAlignment="Left" Background="White" Width="330" Height="360">
-                    <Canvas>
-                        <Label Content="Lambda" FontWeight="Bold" FontFamily="Inter" FontSize="24" Canvas.Left="23" Canvas.Top="24"/>
-                        <Label Content="Applecript" FontWeight="Bold" FontFamily="Inter" FontSize="20" Canvas.Left="211" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock TextWrapping="WrapWithOverflow" Text="An anonymous function. That doesn’t have a name." Width="230" Height="45" FontFamily="Inter" FontSize="15" Foreground="#656565" Canvas.Left="23" Canvas.Top="68"/>
-                        <TextBox Name="textBoxCode" FontSize="13" IsReadOnly="True" BorderBrush="Black" BorderThickness="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Canvas.Left="10" Canvas.Top="113" Height="237" Width="310"/>
-                    </Canvas>
-                </Border>
-
-                <Border Margin="16,0,0,0" HorizontalAlignment="Left"  Background="White" Width="330" Height="360">
-
-                </Border>
-
-                <Border Margin="16,0,0,0" HorizontalAlignment="Left"  Background="White" Width="330" Height="360">
-
-                </Border>
-
-                <Border Margin="16,0,0,0" HorizontalAlignment="Left"  Background="White" Width="330" Height="360">
-
-                </Border>-->
+                <ItemsControl x:Name="icDataDisplay" ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="16,0,0,0" HorizontalAlignment="Left" Background="White" Width="327" Height="337">
+                                <Canvas>
+                                    <Label Content="{Binding Title}" FontWeight="Bold" FontFamily="Inter" FontSize="24" Canvas.Left="15" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    <Label Content="{Binding ProgrammingLanguage}" FontWeight="Bold" FontFamily="Inter" FontSize="20" Foreground="#C44444" Canvas.Left="15" Canvas.Top="43" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Description}" Width="230" Height="45" FontFamily="Inter" FontSize="15" Foreground="#656565" Canvas.Left="20" Canvas.Top="77" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    <TextBox Name="textBoxCode" FontSize="13" IsReadOnly="True" BorderBrush="Black" BorderThickness="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Canvas.Left="20" Canvas.Top="122" Height="205" Width="287" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding CodeSnippet}"/>
+                                </Canvas>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </ScrollViewer>
-
-
 
     </Grid>
 </Window>

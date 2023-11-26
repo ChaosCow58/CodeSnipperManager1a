@@ -32,8 +32,7 @@ namespace CodeSnipperManager1a
 
         private SnippetDatabaseAccess databaseAccess;
 
-        private MainWindow mainWindow;
-
+        private MainWindow mainwindow;
 
         public AddSnippet()
         {
@@ -41,9 +40,8 @@ namespace CodeSnipperManager1a
             ToolBox.GenerateComboBox(cbProgramLang);
 
             databaseAccess = new SnippetDatabaseAccess();
+            mainwindow = new MainWindow();
 
-            mainWindow = new MainWindow();
-            
         }
 
         private void AddToMain_MouseUp(object sender, MouseButtonEventArgs e)
@@ -64,8 +62,15 @@ namespace CodeSnipperManager1a
                 };
 
                 databaseAccess.CreateSnippet(SnippetModel);
-                mainWindow.PopulateGrid();
 
+                // Get a reference to the main window
+                MainWindow? mainWindow = Application.Current.MainWindow as MainWindow;
+
+                // Call the PopulateGrid method in the main window
+                if (mainWindow != null)
+                {
+                    mainWindow.PopulateGrid();
+                }
                 this.Close();
             }
         }
