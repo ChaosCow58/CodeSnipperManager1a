@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace CodeSnipperManager1a
 {
@@ -111,7 +112,63 @@ namespace CodeSnipperManager1a
             deleteWindow.ShowDialog();
         }
 
-      
+        private void ClearSelection()
+        {
+            if (selectedBorder != null)
+            {
+                selectedBorder.Background = Brushes.White;
+                selectedBorder = null;
+                btUpdate.Visibility = Visibility.Hidden;
+                btDelete.Visibility = Visibility.Hidden;
+            }
+        }
 
+
+        private Border? selectedBorder;
+
+        private void SelectBorder_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Border clickedBorder)
+            {
+               ClearSelection();
+
+                // Select the clicked border
+                clickedBorder.Background = new SolidColorBrush(Color.FromRgb(180, 208, 250));
+                selectedBorder = clickedBorder;
+
+                btUpdate.Visibility = Visibility.Visible;
+                btDelete.Visibility = Visibility.Visible;
+            }
+        }
+
+
+        private void EnterBorder_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Border? border = e.Source as Border;
+            if (border != null)
+            {
+                border.Effect = new DropShadowEffect 
+                {
+                    Color = Colors.LightBlue,
+                    Direction = 320,
+                    ShadowDepth = 5,
+                    Opacity = 1,
+                };
+            }
+        }
+
+        private void LeaveBorder_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Border? border = e.Source as Border;
+            if (border != null)
+            {
+                border.Effect = null;
+            }
+        }
+
+        private void Container_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ClearSelection();
+        }
     }
 }

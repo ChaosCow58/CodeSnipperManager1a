@@ -46,11 +46,11 @@
                     <Label Content="+" Foreground="White" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,-18,0,0"/>
                 </Border>
 
-                <Border Name="btUpdate" Visibility="Visible" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Update_MouseUp">
+                <Border Name="btUpdate" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Update_MouseUp">
                     <Image Source="../../Assets/update.png" Margin="4,3,4,3"/>
                 </Border>
 
-                <Border Name="btDelete" Visibility="Visible" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Delete_MouseUp">
+                <Border Name="btDelete" Visibility="Hidden" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Delete_MouseUp">
                     <Image Source="../../Assets/delete.png" Margin="2,2,2,2"/>
                 </Border>
             </StackPanel>
@@ -60,7 +60,7 @@
 
         <ScrollViewer x:Name="svDisplayScroll" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
             <StackPanel x:Name="spDisplayPanel" Grid.Row="1" Orientation="Horizontal" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <ItemsControl x:Name="icDataDisplay" ItemsSource="{Binding Items}">
+                <ItemsControl PreviewMouseLeftButtonUp="Container_PreviewMouseDown" x:Name="icDataDisplay" ItemsSource="{Binding Items}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
@@ -68,7 +68,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="16,0,0,0" HorizontalAlignment="Left" Background="White" Width="327" Height="337">
+                            <Border Margin="16,0,0,0" HorizontalAlignment="Left" Background="White" Width="327" Height="337" MouseUp="SelectBorder_MouseUp" MouseEnter="EnterBorder_MouseEnter" MouseLeave="LeaveBorder_MouseLeave">
                                 <Canvas>
                                     <Label Content="{Binding Title}" FontWeight="Bold" FontFamily="Inter" FontSize="24" Canvas.Left="15" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                     <Label Content="{Binding ProgrammingLanguage}" FontWeight="Bold" FontFamily="Inter" FontSize="20" Foreground="#C44444" Canvas.Left="15" Canvas.Top="43" HorizontalAlignment="Center" VerticalAlignment="Top"/>
