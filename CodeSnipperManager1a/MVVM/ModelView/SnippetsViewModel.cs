@@ -1,14 +1,10 @@
 ﻿using CodeSnipperManager1a.MVVM.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeSnipperManager1a.MVVM.ModelView
 {
+    #pragma warning disable CS8618, CS8612
     public class SnippetsViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Snippet> _items;

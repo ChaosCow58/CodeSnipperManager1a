@@ -1,25 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Newtonsoft.Json;
 using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
-using MongoDB.Driver.Core.Misc;
 
 namespace CodeSnipperManager1a
 {
@@ -34,6 +18,7 @@ namespace CodeSnipperManager1a
 
         private MainWindow mainwindow;
 
+        #pragma warning disable CS8618
         public AddSnippet()
         {
             InitializeComponent();
@@ -57,7 +42,7 @@ namespace CodeSnipperManager1a
                 {
                     Title = TitleTextBox.Text,
                     Description = DescriptionTextBox.Text == "" ? "No Description" : DescriptionTextBox.Text,
-                    ProgrammingLanguage = ParseComboBox(),
+                    ProgrammingLanguage = ToolBox.ParseComboBox(cbProgramLang),
                     CodeSnippet = CodeSnippetBox.Text
                 };
 
@@ -78,29 +63,6 @@ namespace CodeSnipperManager1a
         private void Cancel_MouseUp(object sender, MouseButtonEventArgs e)
         {
             this.Close();
-        }
-
-        private string ParseComboBox() 
-        {
-            List<Item> items = ToolBox.GetJson();
-            string name = "";
-
-            if (items != null)
-            {
-                foreach (Item item in items)
-                {
-                    if (item.extensions != null && item.extensions.Length > 0)
-                    {                      
-                        if (cbProgramLang.SelectedItem.ToString() == $"{item.name} ({item.extensions[0]})") 
-                        {
-                            name += cbProgramLang.SelectedItem.ToString().Substring(0, item.name.Length);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return name;
         }
 
         private bool CheckTextBoxes()

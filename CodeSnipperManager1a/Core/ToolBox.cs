@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -20,6 +16,8 @@ namespace CodeSnipperManager1a.Core
         public string[]? extensions { get; set; }
     }
 
+
+    #pragma warning disable CS8603
     public class ToolBox
     {
         public static void GenerateComboBox(ComboBox comboBox)
@@ -41,8 +39,32 @@ namespace CodeSnipperManager1a.Core
                     }
                 }
             }
-        }       
-        
+        }
+
+        public static string ParseComboBox(ComboBox comboBox)
+        {
+            List<Item> items = GetJson();
+            string name = "";
+
+            #pragma warning disable CS8602
+            if (items != null)
+            {
+                foreach (Item item in items)
+                {
+                    if (item.extensions != null && item.extensions.Length > 0)
+                    {
+                        if (comboBox.SelectedItem.ToString() == $"{item.name} ({item.extensions[0]})")
+                        {
+                            name += comboBox.SelectedItem.ToString().Substring(0, item.name.Length);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return name;
+        }
+
         public static List<Item> GetJson()
         {
             string filePath = @"CodeSnipperManager1a.Jsons.programmingLangs.json";

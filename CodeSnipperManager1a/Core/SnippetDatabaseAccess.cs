@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
@@ -60,10 +59,10 @@ namespace CodeSnipperManager1a.Core
             return results.ToList();
         }  
         
-        public async Task<List<Snippet>> GetSnippet(string SnippetTitle) 
+        public async Task<List<Snippet>> GetSnippet(string SnippetId) 
         {
             IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
-            IAsyncCursor<Snippet> results = await snippets.FindAsync(snippet => snippet.Title == SnippetTitle);
+            IAsyncCursor<Snippet> results = await snippets.FindAsync(snippet => snippet.Id == SnippetId);
 
             return results.ToList();
         }

@@ -1,6 +1,7 @@
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 using CodeSnipperManager1a.MVVM.ModelView;
+using MongoDB.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,6 +30,9 @@ namespace CodeSnipperManager1a
         private SnippetDatabaseAccess databaseAccess;
         private SnippetsViewModel viewModel;
 
+        private string? SnippetId = "";
+
+        #pragma warning disable CS8618
         public MainWindow()
         {
             InitializeComponent();
@@ -57,20 +61,12 @@ namespace CodeSnipperManager1a
             Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
             List<Snippet> snippets = await snippetsTask;
 
-
-            if (viewModel.Items != null) 
-            {
-                viewModel.Items.Clear(); // Clear existing items
-            }
+            viewModel.Items?.Clear(); // Clear existing items
 
             foreach (Snippet snippet in snippets)
             {
-                if (viewModel.Items != null) 
-                {
-                    viewModel.Items.Add(snippet); // Add the new items
-                }
+                viewModel.Items?.Add(snippet); // Add the new items
             }
-
         }
 
 
@@ -83,6 +79,7 @@ namespace CodeSnipperManager1a
                 textBox.Clear();
             }
         }
+
 
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -98,7 +95,7 @@ namespace CodeSnipperManager1a
         {
             updateWindow = new UpdateSnippet();
 
-            updateWindow.Owner = null;
+            updateWindow.Owner = this;
             updateWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             updateWindow.ShowDialog();
         }
@@ -107,7 +104,7 @@ namespace CodeSnipperManager1a
         {
             deleteWindow = new DeleteSnippet();
 
-            deleteWindow.Owner = null;
+            deleteWindow.Owner = this;
             deleteWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             deleteWindow.ShowDialog();
         }
@@ -138,7 +135,31 @@ namespace CodeSnipperManager1a
 
                 btUpdate.Visibility = Visibility.Visible;
                 btDelete.Visibility = Visibility.Visible;
+
+                string? label1 = "";
+
+                foreach (var child in ((Canvas)clickedBorder.Child).Children)
+                {
+                    if (child is Label label)
+                    {
+                        // Access the name of the label
+                        label1 = label.Content.ToString();
+
+                        // Now you can use the labelName as needed
+                        // ...
+
+                        break; // If you only want the first label, you can break the loop here
+                    }
+                }
+
+                SnippetId = label1;
+
             }
+        }
+
+        public string? GetSnippetId() 
+        {
+            return SnippetId;
         }
 
 
