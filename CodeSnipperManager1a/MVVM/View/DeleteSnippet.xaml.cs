@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CodeSnipperManager1a.Core;
+using CodeSnipperManager1a.MVVM.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,13 +21,28 @@ namespace CodeSnipperManager1a
     /// </summary>
     public partial class DeleteSnippet : Window
     {
+
+        private SnippetDatabaseAccess databaseAccess;
         public DeleteSnippet()
         {
             InitializeComponent();
+
+            databaseAccess = new SnippetDatabaseAccess();
         }
 
         private void YesDelete_MouseUp(object sender, MouseButtonEventArgs e)
         {
+
+            MainWindow? mainWindow = Application.Current.MainWindow as MainWindow;
+
+            Snippet deleteSnippet = new Snippet()
+            {
+                Id = mainWindow.GetSnippetId()
+            };
+
+            databaseAccess.DeleteSnippet(deleteSnippet);
+            mainWindow.RefreshData();
+
             this.Close();
         }
 

@@ -11,6 +11,7 @@
     <None Remove="Assets\background.png" />
     <None Remove="Assets\delete.png" />
     <None Remove="Assets\filter.png" />
+    <None Remove="Assets\icon.ico" />
     <None Remove="Assets\profile.png" />
     <None Remove="Assets\search.png" />
     <None Remove="Assets\update.png" />
@@ -21,6 +22,7 @@
     <Resource Include="Assets\background.png" />
     <Resource Include="Assets\delete.png" />
     <Resource Include="Assets\filter.png" />
+    <Resource Include="Assets\icon.ico" />
     <Resource Include="Assets\profile.png" />
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />

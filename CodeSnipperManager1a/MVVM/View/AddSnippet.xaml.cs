@@ -22,6 +22,7 @@ namespace CodeSnipperManager1a
         public AddSnippet()
         {
             InitializeComponent();
+
             ToolBox.GenerateComboBox(cbProgramLang);
 
             databaseAccess = new SnippetDatabaseAccess();
