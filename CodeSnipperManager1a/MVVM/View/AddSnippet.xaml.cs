@@ -1,7 +1,9 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 
@@ -22,6 +24,8 @@ namespace CodeSnipperManager1a
         public AddSnippet()
         {
             InitializeComponent();
+
+            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/icon.ico"));
 
             ToolBox.GenerateComboBox(cbProgramLang);
 

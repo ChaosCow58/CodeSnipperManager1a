@@ -26,6 +26,8 @@ namespace CodeSnipperManager1a
         {
             InitializeComponent();
 
+            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/icon.ico"));
+
             Loaded += UpdateSnippet_Loaded;
 
             ToolBox.GenerateComboBox(cbProgramLang);

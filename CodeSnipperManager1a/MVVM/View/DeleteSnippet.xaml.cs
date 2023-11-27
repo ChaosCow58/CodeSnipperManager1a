@@ -27,6 +27,8 @@ namespace CodeSnipperManager1a
         {
             InitializeComponent();
 
+            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/icon.ico"));
+
             databaseAccess = new SnippetDatabaseAccess();
         }
 
