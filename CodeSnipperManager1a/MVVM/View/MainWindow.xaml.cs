@@ -1,17 +1,12 @@
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 using CodeSnipperManager1a.MVVM.ModelView;
-using MongoDB.Bson;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -31,6 +26,7 @@ namespace CodeSnipperManager1a
         private SnippetsViewModel viewModel;
 
         private string? SnippetId = "";
+        private DateTime SnippetDate;
 
         #pragma warning disable CS8618
         public MainWindow()
@@ -47,19 +43,19 @@ namespace CodeSnipperManager1a
 
         public void RefreshData()
         {
-
             PopulateGrid();
 
             icDataDisplay.UpdateLayout();
             icDataDisplay.InvalidateVisual();
             icDataDisplay.Items.Refresh();
-
         }
 
         public async void PopulateGrid()
         {
             Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
             List<Snippet> snippets = await snippetsTask;
+
+            snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
 
             viewModel.Items?.Clear(); // Clear existing items
 
@@ -73,13 +69,8 @@ namespace CodeSnipperManager1a
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
         {
             TextBox textBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
-
-            if (textBox != null) 
-            {
-                textBox.Clear();
-            }
+            textBox?.Clear();
         }
-
 
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -98,6 +89,7 @@ namespace CodeSnipperManager1a
             updateWindow.Owner = this;
             updateWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             updateWindow.ShowDialog();
+
         }
 
         private void Delete_MouseUp(object sender, MouseButtonEventArgs e)
@@ -137,22 +129,26 @@ namespace CodeSnipperManager1a
                 btDelete.Visibility = Visibility.Visible;
 
                 string? label1 = "";
+                DateTime label2 = new DateTime();
 
                 foreach (var child in ((Canvas)clickedBorder.Child).Children)
                 {
                     if (child is Label label)
                     {
-                        // Access the name of the label
-                        label1 = label.Content.ToString();
+                        if (label.Name.Equals("lBorderId"))
+                        {
+                            label1 = label.Content.ToString();
+                        }
+                        if (label.Name.Equals("lBorderDate")) 
+                        { 
+                            label2 = (DateTime)label.Content;
+                        }
 
-                        // Now you can use the labelName as needed
-                        // ...
-
-                        break; // If you only want the first label, you can break the loop here
                     }
                 }
 
                 SnippetId = label1;
+                SnippetDate = label2;
 
             }
         }
@@ -160,6 +156,11 @@ namespace CodeSnipperManager1a
         public string? GetSnippetId() 
         {
             return SnippetId;
+        }    
+        
+        public DateTime GetSnippetDate() 
+        {
+            return SnippetDate;
         }
 
 

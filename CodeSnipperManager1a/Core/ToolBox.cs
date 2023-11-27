@@ -65,6 +65,30 @@ namespace CodeSnipperManager1a.Core
             return name;
         }
 
+        public static void SetComboBoxSelection(ComboBox comboBox, string programmingLanguage)
+        {
+            List<Item> items = GetJson();
+
+            // Find the index or item that matches the programming language
+            int selectedIndex = -1;
+
+            for (int i = 0; i < comboBox.Items.Count; i++)
+            {
+                string itemText = comboBox.Items[i].ToString();
+                if (itemText.StartsWith(programmingLanguage))
+                {
+                    selectedIndex = i;
+                    break;
+                }
+            }
+
+            // Set the ComboBox selection
+            if (selectedIndex != -1)
+            {
+                comboBox.SelectedIndex = selectedIndex;
+            }
+        }
+
         public static List<Item> GetJson()
         {
             string filePath = @"CodeSnipperManager1a.Jsons.programmingLangs.json";

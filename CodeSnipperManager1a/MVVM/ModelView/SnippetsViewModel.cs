@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace CodeSnipperManager1a.MVVM.ModelView
 {
-    #pragma warning disable CS8618, CS8612
+    #pragma warning disable CS8612, CS8618
     public class SnippetsViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Snippet> _items;

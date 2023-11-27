@@ -71,6 +71,7 @@
                             <Border Margin="8,0,8,0" HorizontalAlignment="Left" Background="White" Width="327" Height="337" MouseUp="SelectBorder_MouseUp" MouseEnter="EnterBorder_MouseEnter" MouseLeave="LeaveBorder_MouseLeave">
                                 <Canvas>
                                     <Label Name="lBorderId" Content="{Binding Id}" Visibility="Hidden"/>
+                                    <Label Name="lBorderDate" Content="{Binding CreatedAt}" Visibility="Hidden"/>
                                     <Label Content="{Binding Title}" FontWeight="Bold" FontFamily="Inter" FontSize="24" Canvas.Left="15" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                     <Label Content="{Binding ProgrammingLanguage}" FontWeight="Bold" FontFamily="Inter" FontSize="20" Foreground="#C44444" Canvas.Left="15" Canvas.Top="43" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                     <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Description}" Width="230" Height="45" FontFamily="Inter" FontSize="15" Foreground="#656565" Canvas.Left="20" Canvas.Top="77" HorizontalAlignment="Center" VerticalAlignment="Top"/>
