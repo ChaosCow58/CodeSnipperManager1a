@@ -374,7 +374,7 @@
   },
   {
     "name": "Cap'n Proto",
-    "type": "programming",
+    "type": "data",
     "extensions": [
       ".capnp"
     ]
