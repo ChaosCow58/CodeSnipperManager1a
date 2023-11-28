@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeSnipperManager1a"
         mc:Ignorable="d"
-        Title="Delete Snippet" Height="180" Width="500" WindowStyle="ToolWindow" ResizeMode="NoResize">
+        Title="Delete Snippet" Height="180" Width="500" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>

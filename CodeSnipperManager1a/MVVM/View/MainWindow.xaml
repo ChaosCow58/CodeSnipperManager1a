@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeSnipperManager1a" xmlns:modelview="clr-namespace:CodeSnipperManager1a.MVVM.ModelView"
-        Title="Code Snippet Manager" Height="450" Width="800">
+        Title="Code Snippet Manager" Height="450" Width="800" MinWidth="405" MinHeight="420">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,6 +24,7 @@
 
             <Border Grid.ColumnSpan="2" Background="White" BorderBrush="Black" BorderThickness="0,1,0,1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Image Source="../../Assets/filter.png" Width="25" Height="25" Grid.Column="1"/>
                     <Border BorderBrush="black" BorderThickness="1" CornerRadius="15" 
                             Width="177" Height="27">
                         <Grid>
@@ -54,7 +55,6 @@
                     <Image Source="../../Assets/delete.png" Margin="2,2,2,2"/>
                 </Border>
             </StackPanel>
-            <Image Source="../../Assets/filter.png" Margin="154,7,220,7" Grid.Column="1"/>
         </Grid>
 
 
