@@ -37,7 +37,10 @@
                             <Label Grid.Column="1" Content="X" Foreground="#FF0000" FontWeight="SemiBold" Margin="66,-1,-36,0" MouseDown="Clear_MouseDown"/>
                         </Grid>
                     </Border>
-                    <Image Source="../../Assets/search.png"/>
+                    <Button Background="Transparent" BorderThickness="0" IsDefault="True" Click="SearchButton_Click">
+                        <Image Source="../../Assets/search.png"/>
+                    </Button>
+                    
                 </StackPanel>
             </Border>
 

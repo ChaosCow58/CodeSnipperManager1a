@@ -60,14 +60,11 @@ namespace CodeSnipperManager1a
             Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
             List<Snippet> snippets = await snippetsTask;
 
+            TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
+
             snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
 
-            viewModel.Items?.Clear(); // Clear existing items
-
-            foreach (Snippet snippet in snippets)
-            {
-                viewModel.Items?.Add(snippet); // Add the new items
-            }
+            FilterItems(SearchTextBox?.Text,snippets);
         }
 
 
@@ -196,6 +193,34 @@ namespace CodeSnipperManager1a
         private void Container_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             ClearSelection();
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            PopulateGrid();
+        }
+
+        private void FilterItems(string searchText, List<Snippet> snippets) 
+        {
+            if (string.IsNullOrEmpty(searchText))
+            {
+                viewModel.Items?.Clear();
+                foreach (Snippet snippet in snippets)
+                {
+                    viewModel.Items?.Add(snippet);
+                }
+            }
+            else 
+            { 
+                List<Snippet> filteredSnippets = snippets
+                    .Where(s => s.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                viewModel.Items?.Clear();
+                foreach (Snippet snippet in filteredSnippets) 
+                {
+                    viewModel.Items?.Add(snippet);
+                }
+            }
         }
     }
 }
