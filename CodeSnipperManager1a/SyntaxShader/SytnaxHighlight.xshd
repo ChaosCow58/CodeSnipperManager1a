@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SyntaxDefinition name="MultiLanguage" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<!--<Color name="Comment" foreground="Green" />
+	<Color name="String" foreground="DarkRed" />
+	<Color name="Keyword" foreground="Blue" />
+	<Color name="Type" foreground="Teal" />
+	<Color name="Loop" foreground="Purple" />
+
+	<RuleSet>
+		--><!-- Single-line comments --><!--
+		<Span color="Comment" begin="//"/>
+
+		--><!-- Multi-line comments --><!--
+		<Span color="Comment" multiline="true">
+			<Begin>/*</Begin>
+			<End>*/</End>
+		</Span>
+
+		--><!-- Strings --><!--
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+			<Rule escape="true" color="String" token="StringEscape" />
+		</Span>--><!--
+
+		--><!-- Keywords --><!--
+		<Keywords color="Keyword">
+			--><!-- Add common keywords here --><!--
+			<Word>if</Word>
+			<Word>else</Word>
+			<Word>while</Word>
+			<Word>for</Word>
+			<Word>do</Word>
+			<Word>switch</Word>
+			<Word>case</Word>
+			<Word>function</Word>
+			<Word>class</Word>
+			<Word>interface</Word>
+			<Word>public</Word>
+			<Word>private</Word>
+			<Word>protected</Word>
+			<Word>try</Word>
+			<Word>catch</Word>
+			<Word>finally</Word>
+			<Word>import</Word>
+			<Word>true</Word>
+			<Word>false</Word>
+			<Word>const</Word>
+			<Word>final</Word>
+			<Word>null</Word>
+			<Word>var</Word>
+		</Keywords>
+
+		<Rule color="Loop">
+			<Word>break</Word>
+			<Word>continue</Word>
+			<Word>yield</Word>
+			<Word>return</Word>
+		</Rule>
+
+		--><!-- Data Types --><!--
+		<Rule color="Type">
+			--><!-- Add common data types here --><!--
+			<Word>int</Word>
+			<Word>float</Word>
+			<Word>string</Word>
+		</Rule>
+	</RuleSet>-->
+
+
+	<Color name="Comment" foreground="Green" />
+	<Color name="String" foreground="Blue" />
+
+	<!-- This is the main ruleset. -->
+	<RuleSet>
+		<Span color="Comment" begin="//" />
+		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+			<RuleSet>
+				<!-- nested span for escape sequences -->
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+
+		<Keywords fontWeight="bold" foreground="Blue">
+			<Word>if</Word>
+			<Word>else</Word>
+			<!-- ... -->
+		</Keywords>
+
+		<!-- Digits -->
+		<Rule foreground="DarkBlue">
+			\b0[xX][0-9a-fA-F]+  # hex number
+			|    \b
+			(    \d+(\.[0-9]+)?   #number with optional floating point
+			|    \.[0-9]+         #or just starting with floating point
+			)
+			([eE][+-]?[0-9]+)? # optional exponent
+		</Rule>
+	</RuleSet>
+</SyntaxDefinition>

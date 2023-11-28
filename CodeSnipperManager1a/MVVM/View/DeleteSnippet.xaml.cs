@@ -43,7 +43,7 @@ namespace CodeSnipperManager1a
             };
 
             databaseAccess.DeleteSnippet(deleteSnippet);
-            mainWindow.RefreshData();
+            mainWindow.PopulateGrid();
 
             this.Close();
         }

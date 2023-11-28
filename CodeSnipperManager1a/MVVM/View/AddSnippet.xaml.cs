@@ -57,10 +57,8 @@ namespace CodeSnipperManager1a
                 MainWindow? mainWindow = Application.Current.MainWindow as MainWindow;
 
                 // Call the PopulateGrid method in the main window
-                if (mainWindow != null)
-                {
-                    mainWindow.PopulateGrid();
-                }
+                mainWindow?.PopulateGrid();
+                
                 this.Close();
             }
         }

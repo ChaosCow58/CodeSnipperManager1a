@@ -16,6 +16,7 @@
     <None Remove="Assets\search.png" />
     <None Remove="Assets\update.png" />
     <None Remove="Jsons\programmingLangs.json" />
+    <None Remove="SyntaxShader\SytnaxHighlight.xshd" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,9 +28,11 @@
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />
     <EmbeddedResource Include="Jsons\programmingLangs.json" />
+    <EmbeddedResource Include="SyntaxShader\SytnaxHighlight.xshd" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

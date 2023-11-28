@@ -1,24 +1,57 @@
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 using CodeSnipperManager1a.MVVM.ModelView;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Xml;
 
 namespace CodeSnipperManager1a
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    public class TextToDocumentConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string text)
+            {
+                return new TextDocument(text);
+            }
+
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is TextDocument document)
+            {
+                return document.Text;
+            }
+
+            return null;
+        }
+    }
+
+
     public partial class MainWindow : Window
     {
         private AddSnippet addWindow;
@@ -42,17 +75,14 @@ namespace CodeSnipperManager1a
             viewModel = new SnippetsViewModel();
 
             DataContext = viewModel;
+
+            Loaded += MainWindow_Loaded;
             PopulateGrid();
         }
 
-
-        public void RefreshData()
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            PopulateGrid();
-
-            icDataDisplay.UpdateLayout();
-            icDataDisplay.InvalidateVisual();
-            icDataDisplay.Items.Refresh();
+            LoadSyntaxDefinition("SytnaxHighlight.xshd");
         }
 
         public async void PopulateGrid()
@@ -68,10 +98,43 @@ namespace CodeSnipperManager1a
         }
 
 
+        private void LoadSyntaxDefinition(string xshdFileName) 
+        { 
+            Assembly assembly = typeof(MainWindow).Assembly;
+            using (Stream stream = assembly.GetManifestResourceStream($"CodeSnipperManager1a.SyntaxShader.{xshdFileName}")) 
+            {
+                if (stream == null) 
+                {
+                    System.Windows.MessageBox.Show($"Syntax definition file {xshdFileName} not found.", "Error");
+                    return;
+                }
+
+                using (var reader = new XmlTextReader(stream))
+                {
+                    var xshd = HighlightingLoader.LoadXshd(reader);
+
+                    // Call FindTextEditors and store the result in a variable
+                    TextEditor textEditor = FindTextEditors(spDisplayPanel);
+
+                    // Check if the TextEditor is not null before setting properties
+                    if (textEditor != null)
+                    {
+                        Debug.WriteLine(textEditor.Name);
+                        // Set SyntaxHighlighting using HighlightingLoader
+                        textEditor.SyntaxHighlighting = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
+                     
+                    }
+                }
+            }
+        }
+
+
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            TextBox textBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
-            textBox?.Clear();
+            TextBox SearchBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
+            SearchBox?.Clear();
+            PopulateGrid();
+            
         }
 
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
@@ -222,5 +285,32 @@ namespace CodeSnipperManager1a
                 }
             }
         }
+
+        private TextEditor FindTextEditors(DependencyObject parent)
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is TextEditor textEditor)
+                {
+                    // You've found a TextEditor, you can do something with it
+                    Debug.WriteLine($"Found TextEditor: {textEditor.Name}");
+                    return textEditor;
+                }
+                else
+                {
+                    // Continue searching recursively
+                    var result = FindTextEditors(child);
+                    if (result != null)
+                    {
+                        return result; // Return the result if a TextEditor is found in descendants
+                    }
+                }
+            }
+
+            return null;
+        }
+
     }
 }

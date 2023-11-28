@@ -63,7 +63,7 @@ namespace CodeSnipperManager1a
 
 
                 databaseAccess.UpdateSnippet(updatedSnippet);
-                mainWindow.RefreshData();
+                mainWindow.PopulateGrid();
                 this.Close();
             }
         }

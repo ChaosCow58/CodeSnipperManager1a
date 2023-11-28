@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -34,7 +35,6 @@ namespace CodeSnipperManager1a.Core
                 {
                     if (lang.type == "programming" && lang.extensions != null && lang.extensions.Length > 0)
                     {
-                        
                         comboBox.Items.Add($"{lang.name} ({lang.extensions[0]})");
                     }
                 }
