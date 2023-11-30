@@ -5,6 +5,8 @@
 	<Color name="Keyword" foreground="Blue" />
 	<Color name="Type" foreground="Teal" />
 	<Color name="Loop" foreground="Purple" />
+	<Color name="FunctionCall" foreground="Yellow" />
+	
 
 	<RuleSet>
 		<Span color="Comment" begin="//" />
@@ -39,12 +41,15 @@
 			<Word>catch</Word>
 			<Word>finally</Word>
 			<Word>import</Word>
+			<Word>using</Word>
 			<Word>true</Word>
 			<Word>false</Word>
 			<Word>const</Word>
 			<Word>final</Word>
 			<Word>null</Word>
 			<Word>var</Word>
+			<Word>void</Word>
+			<Word>class</Word>
 		</Keywords>
 
 		<Keywords color="Loop">
@@ -58,8 +63,29 @@
 		<Keywords color="Type">
 			<!-- Add common data types here -->
 			<Word>int</Word>
+			<Word>long</Word>
+			<Word>short</Word>
+			<Word>byte</Word>
+			<Word>uint</Word>
+			<Word>ulong</Word>
+			<Word>ushort</Word>
+			<Word>sbyte</Word>
+			
 			<Word>float</Word>
+			<Word>double</Word>
+			<Word>decimal</Word>
+			
+			<Word>bool</Word>
+			
+			<Word>char</Word>
+			
 			<Word>string</Word>
+			
+			<Word>enum</Word>
+
+			<Word>object</Word>
+			<Word>dynamic</Word>
+			
 		</Keywords>
 	</RuleSet>
 </SyntaxDefinition>
