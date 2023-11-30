@@ -7,6 +7,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -32,24 +33,25 @@ namespace CodeSnipperManager1a
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string text)
+            // Your conversion logic here
+            // Example: Convert value (assumed to be string) to TextDocument
+            string textValue = value as string;
+            if (!string.IsNullOrEmpty(textValue))
             {
-                return new TextDocument(text);
+                var document = new TextDocument();
+                document.Text = textValue;
+                return document;
             }
-
             return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is TextDocument document)
-            {
-                return document.Text;
-            }
-
-            return null;
+            // Implement if necessary
+            throw new NotImplementedException();
         }
     }
+
 
 
     public partial class MainWindow : Window
@@ -64,7 +66,9 @@ namespace CodeSnipperManager1a
         private string? SnippetId = "";
         private DateTime SnippetDate;
 
-        #pragma warning disable CS8618
+#pragma warning disable CS8618
+     
+
         public MainWindow()
         {
             InitializeComponent();
@@ -77,6 +81,7 @@ namespace CodeSnipperManager1a
             DataContext = viewModel;
 
             Loaded += MainWindow_Loaded;
+
             PopulateGrid();
         }
 
@@ -90,7 +95,7 @@ namespace CodeSnipperManager1a
             Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
             List<Snippet> snippets = await snippetsTask;
 
-            TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
+            TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", icDataDisplay);
 
             snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
 
@@ -98,14 +103,14 @@ namespace CodeSnipperManager1a
         }
 
 
-        private void LoadSyntaxDefinition(string xshdFileName) 
-        { 
+        private void LoadSyntaxDefinition(string xshdFileName)
+        {
             Assembly assembly = typeof(MainWindow).Assembly;
-            using (Stream stream = assembly.GetManifestResourceStream($"CodeSnipperManager1a.SyntaxShader.{xshdFileName}")) 
+            using (Stream stream = assembly.GetManifestResourceStream($"CodeSnipperManager1a.SyntaxShader.{xshdFileName}"))
             {
-                if (stream == null) 
+                if (stream == null)
                 {
-                    System.Windows.MessageBox.Show($"Syntax definition file {xshdFileName} not found.", "Error");
+                    MessageBox.Show($"Syntax definition file {xshdFileName} not found.", "Error");
                     return;
                 }
 
@@ -113,20 +118,19 @@ namespace CodeSnipperManager1a
                 {
                     var xshd = HighlightingLoader.LoadXshd(reader);
 
-                    // Call FindTextEditors and store the result in a variable
-                    TextEditor textEditor = FindTextEditors(spDisplayPanel);
-
-                    // Check if the TextEditor is not null before setting properties
-                    if (textEditor != null)
+                    // Create a new ViewModel if needed
+                    if (viewModel == null)
                     {
-                        Debug.WriteLine(textEditor.Name);
-                        // Set SyntaxHighlighting using HighlightingLoader
-                        textEditor.SyntaxHighlighting = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
-                     
+                        viewModel = new SnippetsViewModel();
+                        icDataDisplay.DataContext = viewModel;
                     }
+
+                    // Set SyntaxHighlighting using HighlightingLoader
+                    viewModel.SyntaxHighlighting = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
                 }
             }
         }
+
 
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
@@ -285,32 +289,5 @@ namespace CodeSnipperManager1a
                 }
             }
         }
-
-        private TextEditor FindTextEditors(DependencyObject parent)
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-
-                if (child is TextEditor textEditor)
-                {
-                    // You've found a TextEditor, you can do something with it
-                    Debug.WriteLine($"Found TextEditor: {textEditor.Name}");
-                    return textEditor;
-                }
-                else
-                {
-                    // Continue searching recursively
-                    var result = FindTextEditors(child);
-                    if (result != null)
-                    {
-                        return result; // Return the result if a TextEditor is found in descendants
-                    }
-                }
-            }
-
-            return null;
-        }
-
     }
 }

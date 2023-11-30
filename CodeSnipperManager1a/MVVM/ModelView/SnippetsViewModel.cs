@@ -1,4 +1,5 @@
 ﻿using CodeSnipperManager1a.MVVM.Model;
+using ICSharpCode.AvalonEdit.Highlighting;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -19,6 +20,21 @@ namespace CodeSnipperManager1a.MVVM.ModelView
             }
         }
 
+        private IHighlightingDefinition _syntaxHighlighting;
+
+        public IHighlightingDefinition SyntaxHighlighting
+        {
+            get { return _syntaxHighlighting; }
+            set
+            {
+                if (_syntaxHighlighting != value)
+                {
+                    _syntaxHighlighting = value;
+                    OnPropertyChanged(nameof(SyntaxHighlighting));
+                }
+            }
+        }
+
         public SnippetsViewModel()
         {
             // Initialize the Items collection
@@ -31,6 +47,8 @@ namespace CodeSnipperManager1a.MVVM.ModelView
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 
 }
