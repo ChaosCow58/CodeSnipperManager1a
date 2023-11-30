@@ -48,7 +48,10 @@
 			<Word>null</Word>
 			<Word>var</Word>
 			<Word>void</Word>
-			<Word>class</Word>
+			<Word>this</Word>
+			<Word>my</Word>
+			<Word>self</Word>
+			<Word>new</Word>
 		</Keywords>
 
 		<Keywords color="Loop">
