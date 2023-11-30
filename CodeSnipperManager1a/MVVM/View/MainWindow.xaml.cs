@@ -289,5 +289,10 @@ namespace CodeSnipperManager1a
                 }
             }
         }
+
+        private void Filter_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            bfilterBox.Visibility = (bfilterBox.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }

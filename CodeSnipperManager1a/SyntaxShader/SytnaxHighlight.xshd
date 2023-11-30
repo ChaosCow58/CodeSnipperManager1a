@@ -5,7 +5,6 @@
 	<Color name="Keyword" foreground="Blue" />
 	<Color name="Type" foreground="Teal" />
 	<Color name="Loop" foreground="Purple" />
-	<Color name="FunctionCall" foreground="Yellow" />
 	
 
 	<RuleSet>

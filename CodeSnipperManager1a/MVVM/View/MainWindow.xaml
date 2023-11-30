@@ -20,6 +20,14 @@
             <ImageBrush ImageSource="/CodeSnipperManager1a;component/Assets/background.png"/>
         </Grid.Background>
 
+        <!-- Filter box in the second row -->
+        <Border Grid.Row="1" x:Name="bfilterBox" Background="White" BorderThickness="2" BorderBrush="Black" Visibility="Collapsed" Panel.ZIndex="1"
+            HorizontalAlignment="Center" VerticalAlignment="Center" Height="206" Width="437">
+            <StackPanel Orientation="Vertical">
+                <TextBox Name="filterTextBox" Text="Filter" Margin="5"/>
+                <Button Content="Apply"/>
+            </StackPanel>
+        </Border>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -28,7 +36,9 @@
 
             <Border Grid.ColumnSpan="2" Background="White" BorderBrush="Black" BorderThickness="0,1,0,1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Image Source="../../Assets/filter.png" Width="25" Height="25" Grid.Column="1"/>
+
+                    <Image Source="../../Assets/filter.png" Width="25" Height="25" Grid.Column="1" MouseUp="Filter_MouseUp"/>
+
                     <Border BorderBrush="black" BorderThickness="1" CornerRadius="15" 
                             Width="177" Height="27">
                         <Grid>
@@ -48,6 +58,8 @@
                 </StackPanel>
             </Border>
 
+
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Image Source="../../Assets/profile.png" Height="33" Width="37"/>
                 <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="16,0,0,0" MouseUp="Add_MouseUp">
@@ -62,6 +74,9 @@
                     <Image Source="../../Assets/delete.png" Margin="2,2,2,2"/>
                 </Border>
             </StackPanel>
+
+
+
         </Grid>
 
         <ScrollViewer x:Name="svDisplayScroll" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
