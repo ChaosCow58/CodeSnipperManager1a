@@ -1,10 +1,3 @@
-﻿using CodeSnipperManager1a.Core;
-using CodeSnipperManager1a.MVVM.Model;
-using CodeSnipperManager1a.MVVM.ModelView;
-using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +15,16 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Xml;
+
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+
+﻿using CodeSnipperManager1a.Core;
+using CodeSnipperManager1a.MVVM.Model;
+using CodeSnipperManager1a.MVVM.ModelView;
+
 
 namespace CodeSnipperManager1a
 {
