@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Themes/TitleBox.xaml"/>
                 <ResourceDictionary Source="Themes/DescriptionBox.xaml"/>
                 <ResourceDictionary Source="Themes/SnippetBox.xaml"/>
+                <ResourceDictionary Source="Themes/RadioButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

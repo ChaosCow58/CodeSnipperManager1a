@@ -21,12 +21,30 @@
         </Grid.Background>
 
         <!-- Filter box in the second row -->
-        <Border Grid.Row="1" x:Name="bfilterBox" Background="White" BorderThickness="2" BorderBrush="Black" Visibility="Collapsed" Panel.ZIndex="1"
+        <Border Grid.Row="1" x:Name="bfilterBox" Background="White" BorderThickness="1" CornerRadius="15" BorderBrush="Black" Visibility="Visible" Panel.ZIndex="2"
             HorizontalAlignment="Center" VerticalAlignment="Center" Height="206" Width="437">
-            <StackPanel Orientation="Vertical">
-                <TextBox Name="filterTextBox" Text="Filter" Margin="5"/>
-                <Button Content="Apply"/>
-            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="68*"/>
+                    <RowDefinition Height="103*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Height="44" Width="260" Margin="0,45,0,0">
+                    <RadioButton  Style="{StaticResource Radio}"  Content="Today" FontSize="8"                 Checked="ToggleButton_Checked" Height="40" Width="51"/>
+                    <RadioButton  Style="{StaticResource Radio}"  Content="Yesterday" FontSize="8"   Margin="-1"  Checked="ToggleButton_Checked" Height="40" Width="53"/>
+                    <RadioButton  Style="{StaticResource Radio}"  Content="30 Days"   FontSize="8"              Checked="ToggleButton_Checked" Height="40" Width="45"/>
+                    <RadioButton  Style="{StaticResource Radio}"  Content="This Month" FontSize="8"  Margin="-1" Checked="ToggleButton_Checked" Height="40" Width="56"/>
+                    <RadioButton  Style="{StaticResource Radio}"  Content="Last Month"   FontSize="8"           Checked="ToggleButton_Checked" Height="40" Width="59"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" Height="40">
+                    <Border Background="Green" Margin="8,0,8,8" CornerRadius="4" Width="66">
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Apply" Foreground="White"/>
+                    </Border>
+                    <Border Background="Red" Margin="2,0,8,8" CornerRadius="4" Width="66" HorizontalAlignment="Right">
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Clear" Foreground="White"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
         </Border>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -34,7 +52,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.ColumnSpan="2" Background="White" BorderBrush="Black" BorderThickness="0,1,0,1">
+            <Border MouseDown="Container_PreviewMouseDown" Grid.ColumnSpan="2" Background="White" BorderBrush="Black" BorderThickness="0,1,0,1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
                     <Image Source="../../Assets/filter.png" Width="25" Height="25" Grid.Column="1" MouseUp="Filter_MouseUp"/>
@@ -60,13 +78,13 @@
 
 
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Background="Transparent">
                 <Image Source="../../Assets/profile.png" Height="33" Width="37"/>
                 <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="16,0,0,0" MouseUp="Add_MouseUp">
                     <Label Content="+" Foreground="White" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,-18,0,0"/>
                 </Border>
 
-                <Border Name="btUpdate" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Update_MouseUp">
+                <Border Name="btUpdate" Panel.ZIndex="3" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Update_MouseUp">
                     <Image Source="../../Assets/update.png" Margin="4,3,4,3"/>
                 </Border>
 
@@ -74,12 +92,9 @@
                     <Image Source="../../Assets/delete.png" Margin="2,2,2,2"/>
                 </Border>
             </StackPanel>
-
-
-
         </Grid>
 
-        <ScrollViewer x:Name="svDisplayScroll" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer x:Name="svDisplayScroll" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" Panel.ZIndex="1">
             <ItemsControl x:Name="icDataDisplay" ItemsSource="{Binding Items}" Grid.Row="1">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

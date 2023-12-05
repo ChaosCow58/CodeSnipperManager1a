@@ -24,6 +24,7 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 using CodeSnipperManager1a.MVVM.ModelView;
+using System.Windows.Controls.Primitives;
 
 
 namespace CodeSnipperManager1a
@@ -90,7 +91,7 @@ namespace CodeSnipperManager1a
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadSyntaxDefinition("SytnaxHighlight.xshd");
+            SetSyntaxDefinitionBasedOnExtension("a");
         }
 
         public async void PopulateGrid()
@@ -98,13 +99,23 @@ namespace CodeSnipperManager1a
             Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
             List<Snippet> snippets = await snippetsTask;
 
-            TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", icDataDisplay);
+            TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
 
             snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
 
             FilterItems(SearchTextBox?.Text,snippets);
+            UpdateLayout();
         }
 
+        private void SetSyntaxDefinitionBasedOnExtension(string fileExtension) 
+        { 
+            switch (fileExtension) 
+            {
+                default:
+                    LoadSyntaxDefinition("SytnaxHighlight.xshd");
+                    break;
+            }
+        }
 
         private void LoadSyntaxDefinition(string xshdFileName)
         {
@@ -296,6 +307,35 @@ namespace CodeSnipperManager1a
         private void Filter_MouseUp(object sender, MouseButtonEventArgs e)
         {
             bfilterBox.Visibility = (bfilterBox.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            //if (sender is RadioButton checkedRadioButton)
+            //{
+            //    // Hide all content blocks
+            //    foreach (UIElement child in contentContainer.Children)
+            //    {
+            //        if (child is TextBlock textBlock)
+            //        {
+            //            textBlock.Visibility = Visibility.Collapsed;
+            //        }
+            //    }
+
+            //    // Show the content block corresponding to the checked radio button
+            //    if (checkedRadioButton == box1)
+            //    {
+            //        contentContainer.Children[0].Visibility = Visibility.Visible;
+            //    }
+            //    else if (checkedRadioButton == box2)
+            //    {
+            //        contentContainer.Children[1].Visibility = Visibility.Visible;
+            //    }
+            //    else if (checkedRadioButton == box3)
+            //    {
+            //        contentContainer.Children[2].Visibility = Visibility.Visible;
+            //    }
+            //}
         }
     }
 }

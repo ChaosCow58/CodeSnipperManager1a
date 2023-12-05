@@ -21,6 +21,8 @@ namespace CodeSnipperManager1a.Core
     #pragma warning disable CS8603
     public class ToolBox
     {
+
+        public static string extensionName = "";
         public static void GenerateComboBox(ComboBox comboBox)
         {
             string filePath = @"CodeSnipperManager1a.Jsons.programmingLangs.json";
@@ -56,6 +58,7 @@ namespace CodeSnipperManager1a.Core
                         if (comboBox.SelectedItem.ToString() == $"{item.name} ({item.extensions[0]})")
                         {
                             name += comboBox.SelectedItem.ToString().Substring(0, item.name.Length);
+                            extensionName = comboBox.SelectedItem.ToString().Substring(item.name.Length + 2, item.extensions[0].Length);
                             break;
                         }
                     }
