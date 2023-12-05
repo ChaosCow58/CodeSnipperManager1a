@@ -34,12 +34,18 @@
                         <Image.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Sort A-Z"/>
+                                <MenuItem Header="Sort Z-A"/>
+                                <MenuItem Header="Programming Lang">
+                                    <ComboBox IsEditable="true" IsReadOnly="True" Text="Programming Lang"/>
+                                </MenuItem>
                                 <MenuItem Header="Date">
                                     <MenuItem Header="Today"/>
                                     <MenuItem Header="Yesterday"/>
                                     <MenuItem Header="Last 30 Days"/>
                                     <MenuItem Header="This Month"/>
                                     <MenuItem Header="Last Month"/>
+                                    <MenuItem Header="This Year"/>
+                                    <MenuItem Header="Last Year"/>
                                 </MenuItem>
                             </ContextMenu>
                         </Image.ContextMenu>

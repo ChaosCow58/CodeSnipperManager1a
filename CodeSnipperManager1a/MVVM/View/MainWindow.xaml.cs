@@ -96,15 +96,15 @@ namespace CodeSnipperManager1a
 
         public async void PopulateGrid()
         {
-            Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
-            List<Snippet> snippets = await snippetsTask;
+           Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
+           List<Snippet> snippets = await snippetsTask;
 
-            TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
+           TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
 
-            snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
+           snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
 
-            FilterItems(SearchTextBox?.Text,snippets);
-            UpdateLayout();
+           FilterItems(SearchTextBox?.Text,snippets);
+           UpdateLayout();
         }
 
         private void SetSyntaxDefinitionBasedOnExtension(string fileExtension) 
@@ -351,7 +351,7 @@ namespace CodeSnipperManager1a
             if (sender is Image clickedImage)
             {
                 // Check if the Image has a ContextMenu
-                if (clickedImage.ContextMenu != null)
+                if (clickedImage.ContextMenu != null && clickedImage.ContextMenu.IsOpen == false)
                 {
                     // Show the context menu
                     clickedImage.ContextMenu.IsOpen = true;
