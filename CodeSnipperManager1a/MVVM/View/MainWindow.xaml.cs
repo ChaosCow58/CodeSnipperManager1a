@@ -306,7 +306,15 @@ namespace CodeSnipperManager1a
 
         private void Filter_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            bfilterBox.Visibility = (bfilterBox.Visibility == Visibility.Visible) ? Visibility.Collapsed : Visibility.Visible;
+            if (sender is Image clickedImage)
+            {
+                // Check if the Image has a ContextMenu
+                if (clickedImage.ContextMenu != null)
+                {
+                    // Show the context menu
+                    clickedImage.ContextMenu.IsOpen = true;
+                }
+            }
         }
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -336,6 +344,19 @@ namespace CodeSnipperManager1a
             //        contentContainer.Children[2].Visibility = Visibility.Visible;
             //    }
             //}
+        }
+
+        private void Filter_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is Image clickedImage)
+            {
+                // Check if the Image has a ContextMenu
+                if (clickedImage.ContextMenu != null)
+                {
+                    // Show the context menu
+                    clickedImage.ContextMenu.IsOpen = true;
+                }
+            }
         }
     }
 }
