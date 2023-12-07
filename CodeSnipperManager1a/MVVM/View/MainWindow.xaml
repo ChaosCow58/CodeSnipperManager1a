@@ -32,40 +32,40 @@
 
                     <Image Source="../../Assets/filter.png" Width="25" Height="25" Grid.Column="1" MouseEnter="Filter_MouseEnter">
                         <Image.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Sort A-Z"/>
-                                <MenuItem Header="Sort Z-A"/>
-                                <MenuItem Header="Programming Lang">
-                                    <ComboBox IsEditable="true" IsReadOnly="True" Text="Programming Lang"/>
-                                </MenuItem>
+                            <ContextMenu Name="cmFilterMenu">
+                                <MenuItem Header="Clear Filter"/>
+                                <Separator/>
+                                <MenuItem Name="miAZ" Tag="aToZ" Header="Sort A-Z" IsCheckable="True" Click="SortAZ_MenuItem_Click"/>
+                                <MenuItem Header="Sort Z-A" IsCheckable="True"/>
+                                <Separator/>
                                 <MenuItem Header="Date">
-                                    <MenuItem Header="Today"/>
-                                    <MenuItem Header="Yesterday"/>
-                                    <MenuItem Header="Last 30 Days"/>
-                                    <MenuItem Header="This Month"/>
-                                    <MenuItem Header="Last Month"/>
-                                    <MenuItem Header="This Year"/>
-                                    <MenuItem Header="Last Year"/>
+                                    <MenuItem Header="Today"        IsCheckable="True"/>
+                                    <MenuItem Header="Yesterday"    IsCheckable="True"/>
+                                    <MenuItem Header="Last 30 Days" IsCheckable="True"/>
+                                    <MenuItem Header="This Month"   IsCheckable="True"/>
+                                    <MenuItem Header="Last Month"   IsCheckable="True"/>
+                                    <MenuItem Header="This Year"    IsCheckable="True"/>
+                                    <MenuItem Header="Last Year"    IsCheckable="True"/>
                                 </MenuItem>
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
 
-                        <Border BorderBrush="black" BorderThickness="1" CornerRadius="15" 
-                            Width="177" Height="27">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
+                    <Border BorderBrush="black" BorderThickness="1" CornerRadius="15" 
+                        Width="177" Height="27">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
-                            <TextBox Name="tbSearchBox" Text="Search" Style="{StaticResource SearchBox}" Grid.ColumnSpan="2" Margin="10,3,20,2"/>
-                            <Label Grid.Column="1" Content="X" Foreground="#FF0000" FontWeight="SemiBold" Margin="66,-1,-36,0" MouseDown="Clear_MouseDown"/>
-                        </Grid>
-                    </Border>
-                    <Button Background="Transparent" BorderThickness="0" IsDefault="True" Click="SearchButton_Click">
-                        <Image Source="../../Assets/search.png"/>
-                    </Button>
+                        <TextBox Name="tbSearchBox" Text="Search" Style="{StaticResource SearchBox}" Grid.ColumnSpan="2" Margin="10,3,20,2"/>
+                        <Label Grid.Column="1" Content="X" Foreground="#FF0000" FontWeight="SemiBold" Margin="66,-1,-36,0" MouseDown="Clear_MouseDown"/>
+                    </Grid>
+                </Border>
+                <Button Background="Transparent" BorderThickness="0" IsDefault="True" Click="SearchButton_Click">
+                    <Image Source="../../Assets/search.png"/>
+                </Button>
 
                 </StackPanel>
             </Border>

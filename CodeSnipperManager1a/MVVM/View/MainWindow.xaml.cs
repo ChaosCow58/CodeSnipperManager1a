@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -16,7 +14,6 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Xml;
 
-using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
@@ -24,7 +21,8 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 using CodeSnipperManager1a.MVVM.ModelView;
-using System.Windows.Controls.Primitives;
+using System.Net.NetworkInformation;
+using System.Diagnostics;
 
 
 namespace CodeSnipperManager1a
@@ -82,6 +80,7 @@ namespace CodeSnipperManager1a
             databaseAccess = new SnippetDatabaseAccess();
             viewModel = new SnippetsViewModel();
 
+
             DataContext = viewModel;
 
             Loaded += MainWindow_Loaded;
@@ -94,17 +93,71 @@ namespace CodeSnipperManager1a
             SetSyntaxDefinitionBasedOnExtension("a");
         }
 
+        
+        private void FilterItems(string searchText, List<Snippet> snippets)
+        {
+
+            List<string> curentFilters = new List<string>();
+        
+            
+            foreach (var item in cmFilterMenu.Items)
+            {
+                if (item is MenuItem menuItem)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        curentFilters.Add(menuItem.Tag.ToString());
+                    }
+                    else if (menuItem.IsChecked == false && curentFilters.Count > 1)
+                    { 
+                        curentFilters.Remove(menuItem.Tag.ToString());
+                    }
+                }
+            }
+
+            foreach (string filter in curentFilters) 
+            {
+                if (filter == ("aToZ"))
+                {
+                    snippets = snippets.OrderBy(s => s.Title).ToList();
+                }
+                else
+                {
+                    snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
+                }
+            }
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                viewModel.Items?.Clear();
+                foreach (Snippet snippet in snippets)
+                {
+                    viewModel.Items?.Add(snippet);
+                }
+            }
+            else
+            {
+                List<Snippet> filteredSnippets = snippets
+                          .Where(s => s.Title.StartsWith(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                viewModel.Items?.Clear();
+                foreach (Snippet snippet in filteredSnippets)
+                {
+                    viewModel.Items?.Add(snippet);
+                }
+            }
+        }
+
         public async void PopulateGrid()
         {
-           Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
-           List<Snippet> snippets = await snippetsTask;
+            Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
+            List<Snippet> snippets = await snippetsTask;
 
-           TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
+            TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
 
-           snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
+            FilterItems(SearchTextBox?.Text, snippets);
+            
 
-           FilterItems(SearchTextBox?.Text,snippets);
-           UpdateLayout();
+            UpdateLayout();
         }
 
         private void SetSyntaxDefinitionBasedOnExtension(string fileExtension) 
@@ -144,8 +197,6 @@ namespace CodeSnipperManager1a
                 }
             }
         }
-
-
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -281,29 +332,6 @@ namespace CodeSnipperManager1a
             PopulateGrid();
         }
 
-        private void FilterItems(string searchText, List<Snippet> snippets) 
-        {
-            if (string.IsNullOrEmpty(searchText))
-            {
-                viewModel.Items?.Clear();
-                foreach (Snippet snippet in snippets)
-                {
-                    viewModel.Items?.Add(snippet);
-                }
-            }
-            else 
-            { 
-                List<Snippet> filteredSnippets = snippets
-                    .Where(s => s.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-
-                viewModel.Items?.Clear();
-                foreach (Snippet snippet in filteredSnippets) 
-                {
-                    viewModel.Items?.Add(snippet);
-                }
-            }
-        }
-
         private void Filter_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (sender is Image clickedImage)
@@ -316,36 +344,6 @@ namespace CodeSnipperManager1a
                 }
             }
         }
-
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            //if (sender is RadioButton checkedRadioButton)
-            //{
-            //    // Hide all content blocks
-            //    foreach (UIElement child in contentContainer.Children)
-            //    {
-            //        if (child is TextBlock textBlock)
-            //        {
-            //            textBlock.Visibility = Visibility.Collapsed;
-            //        }
-            //    }
-
-            //    // Show the content block corresponding to the checked radio button
-            //    if (checkedRadioButton == box1)
-            //    {
-            //        contentContainer.Children[0].Visibility = Visibility.Visible;
-            //    }
-            //    else if (checkedRadioButton == box2)
-            //    {
-            //        contentContainer.Children[1].Visibility = Visibility.Visible;
-            //    }
-            //    else if (checkedRadioButton == box3)
-            //    {
-            //        contentContainer.Children[2].Visibility = Visibility.Visible;
-            //    }
-            //}
-        }
-
         private void Filter_MouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is Image clickedImage)
@@ -357,6 +355,14 @@ namespace CodeSnipperManager1a
                     clickedImage.ContextMenu.IsOpen = true;
                 }
             }
+        }
+
+        private void SortAZ_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            
+           PopulateGrid();
+            
+           
         }
     }
 }

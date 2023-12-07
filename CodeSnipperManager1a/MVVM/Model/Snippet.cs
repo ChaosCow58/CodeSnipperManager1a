@@ -14,6 +14,6 @@ namespace CodeSnipperManager1a.MVVM.Model
         public string? Description { get; set; }
         public string ProgrammingLanguage { get; set; }
         public string CodeSnippet { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }
