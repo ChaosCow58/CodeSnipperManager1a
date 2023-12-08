@@ -98,18 +98,19 @@ namespace CodeSnipperManager1a
         {
 
             List<string> curentFilters = new List<string>();
+            curentFilters.Add("");
         
             
             foreach (var item in cmFilterMenu.Items)
             {
-                if (item is MenuItem menuItem)
+                if (item is MenuItem menuItem && menuItem.Tag != null)
                 {
                     if (menuItem.IsChecked == true)
                     {
                         curentFilters.Add(menuItem.Tag.ToString());
                     }
-                    else if (menuItem.IsChecked == false && curentFilters.Count > 1)
-                    { 
+                    else if (menuItem.IsChecked == false && curentFilters.Count > 1 && curentFilters.Contains(menuItem.Tag.ToString()))
+                    {
                         curentFilters.Remove(menuItem.Tag.ToString());
                     }
                 }
@@ -117,13 +118,18 @@ namespace CodeSnipperManager1a
 
             foreach (string filter in curentFilters) 
             {
-                if (filter == ("aToZ"))
+                Debug.WriteLine($"Filters: {filter}");
+                switch (filter)
                 {
-                    snippets = snippets.OrderBy(s => s.Title).ToList();
-                }
-                else
-                {
-                    snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
+                    case "aToZ":
+                        snippets = snippets.OrderBy(s => s.Title).ToList();
+                        break;
+                    case "zToA":
+                        snippets = snippets.OrderByDescending(s => s.Title).ToList();
+                        break;
+                    default:
+                        snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
+                        break;
                 }
             }
 
@@ -359,10 +365,35 @@ namespace CodeSnipperManager1a
 
         private void SortAZ_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (miZA.IsChecked == true) 
+            { 
+                miZA.IsChecked = false;
+            }
            PopulateGrid();
-            
-           
+        }
+
+        private void SortZA_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (miAZ.IsChecked == true) 
+            { 
+                miAZ.IsChecked = false;
+            }
+            PopulateGrid();
+        }
+
+        private void ClearFilters_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in cmFilterMenu.Items)
+            {
+                if (item is MenuItem menuItem)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                }
+            }
+            PopulateGrid();
         }
     }
 }

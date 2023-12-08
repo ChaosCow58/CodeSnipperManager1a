@@ -33,10 +33,10 @@
                     <Image Source="../../Assets/filter.png" Width="25" Height="25" Grid.Column="1" MouseEnter="Filter_MouseEnter">
                         <Image.ContextMenu>
                             <ContextMenu Name="cmFilterMenu">
-                                <MenuItem Header="Clear Filter"/>
+                                <MenuItem Header="Clear Filters" Click="ClearFilters_MenuItem_Click"/>
                                 <Separator/>
                                 <MenuItem Name="miAZ" Tag="aToZ" Header="Sort A-Z" IsCheckable="True" Click="SortAZ_MenuItem_Click"/>
-                                <MenuItem Header="Sort Z-A" IsCheckable="True"/>
+                                <MenuItem Name="miZA" Tag="zToA" Header="Sort Z-A" IsCheckable="True" Click="SortZA_MenuItem_Click"/>
                                 <Separator/>
                                 <MenuItem Header="Date">
                                     <MenuItem Header="Today"        IsCheckable="True"/>
