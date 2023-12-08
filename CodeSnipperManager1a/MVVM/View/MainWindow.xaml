@@ -33,19 +33,19 @@
                     <Image Source="../../Assets/filter.png" Width="25" Height="25" Grid.Column="1" MouseEnter="Filter_MouseEnter">
                         <Image.ContextMenu>
                             <ContextMenu Name="cmFilterMenu">
-                                <MenuItem Header="Clear Filters" Click="ClearFilters_MenuItem_Click"/>
+                                <MenuItem Header="Clear Filters" IsCheckable="False" Click="ClearFilters_MenuItem_Click"/>
                                 <Separator/>
                                 <MenuItem Name="miAZ" Tag="aToZ" Header="Sort A-Z" IsCheckable="True" Click="SortAZ_MenuItem_Click"/>
                                 <MenuItem Name="miZA" Tag="zToA" Header="Sort Z-A" IsCheckable="True" Click="SortZA_MenuItem_Click"/>
                                 <Separator/>
-                                <MenuItem Header="Date">
-                                    <MenuItem Header="Today"        IsCheckable="True"/>
-                                    <MenuItem Header="Yesterday"    IsCheckable="True"/>
-                                    <MenuItem Header="Last 30 Days" IsCheckable="True"/>
-                                    <MenuItem Header="This Month"   IsCheckable="True"/>
-                                    <MenuItem Header="Last Month"   IsCheckable="True"/>
-                                    <MenuItem Header="This Year"    IsCheckable="True"/>
-                                    <MenuItem Header="Last Year"    IsCheckable="True"/>
+                                <MenuItem Header="Date" Tag="">
+                                    <MenuItem Tag="today"      Header="Today"        IsCheckable="True"/>
+                                    <MenuItem Tag="yesterday"  Header="Yesterday"    IsCheckable="True"/>
+                                    <MenuItem Tag="last30Days" Header="Last 30 Days" IsCheckable="True"/>
+                                    <MenuItem Tag="thisMonth"  Header="This Month"   IsCheckable="True"/>
+                                    <MenuItem Tag="lastMonth"  Header="Last Month"   IsCheckable="True"/>
+                                    <MenuItem Tag="thisYear"   Header="This Year"    IsCheckable="True"/>
+                                    <MenuItem Tag="lastYear"   Header="Last Year"    IsCheckable="True"/>
                                 </MenuItem>
                             </ContextMenu>
                         </Image.ContextMenu>

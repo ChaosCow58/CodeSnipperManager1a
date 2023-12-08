@@ -105,6 +105,24 @@ namespace CodeSnipperManager1a
             {
                 if (item is MenuItem menuItem && menuItem.Tag != null)
                 {
+                    if (menuItem.HasItems) 
+                    { 
+                        foreach (var item2 in menuItem.Items) 
+                        {
+                            if (item2 is MenuItem menuItem2 && menuItem2.Tag != null) 
+                            {
+                                if (menuItem.IsChecked == true)
+                                {
+                                    curentFilters.Add(menuItem.Tag.ToString());
+                                    break;
+                                }
+                                else if (menuItem.IsChecked == false && curentFilters.Count > 1 && curentFilters.Contains(menuItem.Tag.ToString()))
+                                {
+                                    curentFilters.Remove(menuItem.Tag.ToString());
+                                }
+                            }
+                        }
+                    }
                     if (menuItem.IsChecked == true)
                     {
                         curentFilters.Add(menuItem.Tag.ToString());
@@ -127,6 +145,20 @@ namespace CodeSnipperManager1a
                     case "zToA":
                         snippets = snippets.OrderByDescending(s => s.Title).ToList();
                         break;
+                    case "today":
+                        break;
+                    case "yesterday":
+                        break;
+                    case "last30Days":
+                        break;
+                    case "thisMonth":
+                        break; 
+                    case "lastMonth":
+                        break; 
+                    case "thisYear":
+                        break; 
+                    case "lastYear":
+                        break; 
                     default:
                         snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
                         break;
