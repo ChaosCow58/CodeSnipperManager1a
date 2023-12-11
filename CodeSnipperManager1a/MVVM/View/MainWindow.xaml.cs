@@ -54,8 +54,6 @@ namespace CodeSnipperManager1a
         }
     }
 
-
-
     public partial class MainWindow : Window
     {
         private AddSnippet addWindow;
@@ -70,7 +68,6 @@ namespace CodeSnipperManager1a
 
 #pragma warning disable CS8618
      
-
         public MainWindow()
         {
             InitializeComponent();
@@ -93,50 +90,38 @@ namespace CodeSnipperManager1a
             SetSyntaxDefinitionBasedOnExtension("a");
         }
 
-        
+        #region Populate Data
         private void FilterItems(string searchText, List<Snippet> snippets)
         {
+            List<string> currentFilters = new List<string>();
+            currentFilters.Add("");
 
-            List<string> curentFilters = new List<string>();
-            curentFilters.Add("");
-        
-            
             foreach (var item in cmFilterMenu.Items)
             {
-                if (item is MenuItem menuItem && menuItem.Tag != null)
+                if (item is MenuItem menuItem)
                 {
-                    if (menuItem.HasItems) 
-                    { 
-                        foreach (var item2 in menuItem.Items) 
+                    if (menuItem.HasItems)
+                    {
+                        foreach (var item2 in menuItem.Items)
                         {
-                            if (item2 is MenuItem menuItem2 && menuItem2.Tag != null) 
+                            if (item2 is MenuItem menuItem2) 
                             {
-                                if (menuItem.IsChecked == true)
-                                {
-                                    curentFilters.Add(menuItem.Tag.ToString());
-                                    break;
-                                }
-                                else if (menuItem.IsChecked == false && curentFilters.Count > 1 && curentFilters.Contains(menuItem.Tag.ToString()))
-                                {
-                                    curentFilters.Remove(menuItem.Tag.ToString());
-                                }
+                                currentFilters = ProcessSubMenuItems(menuItem2);
+                            }
+                            else if (menuItem.IsChecked == false && currentFilters.Count > 1 && currentFilters.Contains(menuItem.Tag.ToString()))
+                            {
+                                currentFilters.Add(menuItem.Tag.ToString());
                             }
                         }
-                    }
-                    if (menuItem.IsChecked == true)
-                    {
-                        curentFilters.Add(menuItem.Tag.ToString());
-                    }
-                    else if (menuItem.IsChecked == false && curentFilters.Count > 1 && curentFilters.Contains(menuItem.Tag.ToString()))
-                    {
-                        curentFilters.Remove(menuItem.Tag.ToString());
                     }
                 }
             }
 
-            foreach (string filter in curentFilters) 
+
+            foreach (string filter in currentFilters)
             {
                 Debug.WriteLine($"Filters: {filter}");
+
                 switch (filter)
                 {
                     case "aToZ":
@@ -146,43 +131,42 @@ namespace CodeSnipperManager1a
                         snippets = snippets.OrderByDescending(s => s.Title).ToList();
                         break;
                     case "today":
+                        DateTime todayStart = DateTime.Now.Date;
+                        DateTime todayEnd = todayStart.AddDays(1).AddTicks(-1);
+
+                        snippets = snippets
+                            .Where(s => s.CreatedAt >= todayStart && s.CreatedAt <= todayEnd)
+                            .OrderByDescending(s => s.CreatedAt)
+                            .ToList();
                         break;
-                    case "yesterday":
-                        break;
-                    case "last30Days":
-                        break;
-                    case "thisMonth":
-                        break; 
-                    case "lastMonth":
-                        break; 
-                    case "thisYear":
-                        break; 
-                    case "lastYear":
-                        break; 
                     default:
                         snippets = snippets.OrderByDescending(s => s.CreatedAt).ToList();
                         break;
                 }
             }
 
-            if (string.IsNullOrEmpty(searchText))
+            if (!string.IsNullOrEmpty(searchText))
             {
-                viewModel.Items?.Clear();
-                foreach (Snippet snippet in snippets)
+                snippets = snippets
+                    .Where(s => s.Title.StartsWith(searchText, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            viewModel.Items?.Clear();
+            snippets.ForEach(snippet => viewModel.Items?.Add(snippet));
+        }
+
+        private List<string> ProcessSubMenuItems(MenuItem menuItem)
+        {
+            List<string> result = new List<string>();
+            foreach (var subItem in menuItem.Items)
+            {
+                if (subItem is MenuItem subMenuItem && subMenuItem.IsChecked == true && subMenuItem.Tag != null)
                 {
-                    viewModel.Items?.Add(snippet);
+                    result.Add(subMenuItem.Tag.ToString());
                 }
             }
-            else
-            {
-                List<Snippet> filteredSnippets = snippets
-                          .Where(s => s.Title.StartsWith(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-                viewModel.Items?.Clear();
-                foreach (Snippet snippet in filteredSnippets)
-                {
-                    viewModel.Items?.Add(snippet);
-                }
-            }
+            return result;
         }
 
         public async void PopulateGrid()
@@ -197,7 +181,9 @@ namespace CodeSnipperManager1a
 
             UpdateLayout();
         }
+        #endregion Populate Data
 
+        #region Syntax Highlighting
         private void SetSyntaxDefinitionBasedOnExtension(string fileExtension) 
         { 
             switch (fileExtension) 
@@ -235,6 +221,9 @@ namespace CodeSnipperManager1a
                 }
             }
         }
+        #endregion Syntax Highlighting
+
+        #region Top Bar
 
         private void Clear_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -244,6 +233,13 @@ namespace CodeSnipperManager1a
             
         }
 
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            PopulateGrid();
+        }
+        #endregion Top Bar
+
+        #region Window Calls
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
         {
             addWindow = new AddSnippet();
@@ -272,19 +268,9 @@ namespace CodeSnipperManager1a
             deleteWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             deleteWindow.ShowDialog();
         }
+        #endregion Window Calls
 
-        private void ClearSelection()
-        {
-            if (selectedBorder != null)
-            {
-                selectedBorder.Background = Brushes.White;
-                selectedBorder = null;
-                btUpdate.Visibility = Visibility.Hidden;
-                btDelete.Visibility = Visibility.Hidden;
-            }
-        }
-
-
+        #region Border Selection
         private Border? selectedBorder;
 
         private void SelectBorder_MouseUp(object sender, MouseButtonEventArgs e)
@@ -360,16 +346,24 @@ namespace CodeSnipperManager1a
             }
         }
 
+        private void ClearSelection()
+        {
+            if (selectedBorder != null)
+            {
+                selectedBorder.Background = Brushes.White;
+                selectedBorder = null;
+                btUpdate.Visibility = Visibility.Hidden;
+                btDelete.Visibility = Visibility.Hidden;
+            }
+        }
+
         private void Container_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             ClearSelection();
         }
+        #endregion Border Selection
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            PopulateGrid();
-        }
-
+        #region Filters
         private void Filter_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (sender is Image clickedImage)
@@ -395,6 +389,35 @@ namespace CodeSnipperManager1a
             }
         }
 
+        private void ClearFilters_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in cmFilterMenu.Items)
+            {
+                if (item is MenuItem menuItem)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                    if (menuItem.HasItems) 
+                    {
+                        foreach (var item2 in menuItem.Items) 
+                        {
+                            if (item2 is MenuItem menuItem2)
+                            {
+                                if (menuItem2.IsChecked == true)
+                                {
+                                    menuItem2.IsChecked = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            PopulateGrid();
+        }
+
+        #region Alphabetical FIlters
         private void SortAZ_MenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (miZA.IsChecked == true) 
@@ -412,12 +435,14 @@ namespace CodeSnipperManager1a
             }
             PopulateGrid();
         }
+        #endregion Alphabetical FIlters
 
-        private void ClearFilters_MenuItem_Click(object sender, RoutedEventArgs e)
+        #region Data Filters
+        private void today_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in cmFilterMenu.Items)
+            foreach (var item in miDateMenu.Items)
             {
-                if (item is MenuItem menuItem)
+                if (item is MenuItem menuItem && menuItem != sender)
                 {
                     if (menuItem.IsChecked == true)
                     {
@@ -427,5 +452,97 @@ namespace CodeSnipperManager1a
             }
             PopulateGrid();
         }
+
+        private void yesterday_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in miDateMenu.Items)
+            {
+                if (item is MenuItem menuItem && menuItem != sender)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                }
+            }
+            PopulateGrid();
+        }
+
+        private void last30Days_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in miDateMenu.Items)
+            {
+                if (item is MenuItem menuItem && menuItem != sender)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                }
+            }
+            PopulateGrid();
+        }
+
+        private void thisMonth_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in miDateMenu.Items)
+            {
+                if (item is MenuItem menuItem && menuItem != sender)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                }
+            }
+            PopulateGrid();
+        }
+
+        private void lastMonth_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in miDateMenu.Items)
+            {
+                if (item is MenuItem menuItem && menuItem != sender)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                }
+            }
+            PopulateGrid();
+        }
+
+        private void thisYear_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in miDateMenu.Items)
+            {
+                if (item is MenuItem menuItem && menuItem != sender)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                }
+            }
+            PopulateGrid();
+        }
+
+        private void lastYear_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in miDateMenu.Items)
+            {
+                if (item is MenuItem menuItem && menuItem != sender)
+                {
+                    if (menuItem.IsChecked == true)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                }
+            }
+            PopulateGrid();
+        }
+        #endregion Date Filters
+        #endregion Filters
     }
 }
