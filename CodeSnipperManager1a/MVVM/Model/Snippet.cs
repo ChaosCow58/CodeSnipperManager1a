@@ -1,8 +1,6 @@
 ﻿using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
-using System.Globalization;
 
 namespace CodeSnipperManager1a.MVVM.Model
 {

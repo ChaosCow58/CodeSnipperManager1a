@@ -21,7 +21,6 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 using CodeSnipperManager1a.MVVM.ModelView;
-using System.Net.NetworkInformation;
 using System.Diagnostics;
 
 

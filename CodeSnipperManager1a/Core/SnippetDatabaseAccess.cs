@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-using CodeSnipperManager1a.MVVM.Model;
-
 using MongoDB.Driver;
 using MongoDB.Bson;
+
+using CodeSnipperManager1a.MVVM.Model;
+
 
 namespace CodeSnipperManager1a.Core
 {
