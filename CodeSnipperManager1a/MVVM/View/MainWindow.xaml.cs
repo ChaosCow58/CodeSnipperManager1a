@@ -93,6 +93,10 @@ namespace CodeSnipperManager1a
         #region Populate Data
         private void FilterItems(string searchText, List<Snippet> snippets)
         {
+
+            DateTime dateStart = new DateTime();
+            DateTime dateEnd = new DateTime();
+
             List<string> currentFilters = new List<string>();
             currentFilters.Add("");
 
@@ -100,17 +104,28 @@ namespace CodeSnipperManager1a
             {
                 if (item is MenuItem menuItem)
                 {
+                    if (menuItem.IsChecked == true) 
+                    {
+                        currentFilters.Add(menuItem.Tag.ToString());
+                    }
+                    else if (menuItem.IsChecked == false && currentFilters.Count > 1 && currentFilters.Contains(menuItem.Tag.ToString()))
+                    {
+                        currentFilters.Remove(menuItem.Tag.ToString());
+                    }
                     if (menuItem.HasItems)
                     {
                         foreach (var item2 in menuItem.Items)
                         {
                             if (item2 is MenuItem menuItem2) 
                             {
-                                currentFilters = ProcessSubMenuItems(menuItem2);
-                            }
-                            else if (menuItem.IsChecked == false && currentFilters.Count > 1 && currentFilters.Contains(menuItem.Tag.ToString()))
-                            {
-                                currentFilters.Add(menuItem.Tag.ToString());
+                                if (menuItem2.IsChecked == true)
+                                {
+                                    currentFilters.Add(menuItem2.Tag.ToString());
+                                }
+                                else if (menuItem2.IsChecked == false && currentFilters.Count > 1 && currentFilters.Contains(menuItem2.Tag.ToString()))
+                                {
+                                    currentFilters.Remove(menuItem2.Tag.ToString());
+                                }
                             }
                         }
                     }
@@ -131,11 +146,64 @@ namespace CodeSnipperManager1a
                         snippets = snippets.OrderByDescending(s => s.Title).ToList();
                         break;
                     case "today":
-                        DateTime todayStart = DateTime.Now.Date;
-                        DateTime todayEnd = todayStart.AddDays(1).AddTicks(-1);
+                        dateStart = DateTime.Now.Date;
+                        dateEnd = dateStart.AddDays(1);
 
                         snippets = snippets
-                            .Where(s => s.CreatedAt >= todayStart && s.CreatedAt <= todayEnd)
+                            .Where(s => s.CreatedAt >= dateStart && s.CreatedAt < dateEnd)
+                            .OrderByDescending(s => s.CreatedAt)
+                            .ToList();
+                        break;
+                    case "yesterday":
+                        dateStart = DateTime.Now.Date;
+                        dateEnd = dateStart.AddDays(-1);
+
+                        snippets = snippets
+                            .Where(s => s.CreatedAt >= dateEnd && s.CreatedAt < dateStart)
+                            .OrderByDescending(s => s.CreatedAt)
+                            .ToList();
+                        break;
+                    case "last30Days":
+                        dateStart = DateTime.Now.Date.AddDays(-30);
+
+                        snippets = snippets
+                            .Where(s => s.CreatedAt >= dateStart && s.CreatedAt <= DateTime.Now.Date)
+                            .OrderByDescending(s => s.CreatedAt)
+                            .ToList();
+                        break;
+                    case "thisMonth":
+                        dateStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                        dateEnd = dateStart.AddMonths(1);
+
+                        snippets = snippets
+                            .Where(s => s.CreatedAt >= dateStart && s.CreatedAt < dateEnd)
+                            .OrderByDescending(s => s.CreatedAt)
+                            .ToList();
+                        break;         
+                    case "lastMonth":
+                        dateStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                        dateEnd = dateStart.AddMonths(-1);
+
+                        snippets = snippets
+                            .Where(s => s.CreatedAt >= dateEnd && s.CreatedAt < dateStart)
+                            .OrderByDescending(s => s.CreatedAt)
+                            .ToList();
+                        break;
+                    case "thisYear":
+                        dateStart = new DateTime(DateTime.Now.Year, 1, 1);
+                        dateEnd = dateStart.AddYears(1);
+
+                        snippets = snippets
+                            .Where(s => s.CreatedAt >= dateStart && s.CreatedAt < dateEnd)
+                            .OrderByDescending(s => s.CreatedAt)
+                            .ToList();
+                        break;
+                    case "lastYear":
+                        dateStart = new DateTime(DateTime.Now.Year, 1, 1);
+                        dateEnd = dateStart.AddYears(-1);
+
+                        snippets = snippets
+                            .Where(s => s.CreatedAt >= dateEnd && s.CreatedAt < dateStart)
                             .OrderByDescending(s => s.CreatedAt)
                             .ToList();
                         break;
@@ -346,7 +414,7 @@ namespace CodeSnipperManager1a
             }
         }
 
-        private void ClearSelection()
+        public void ClearSelection()
         {
             if (selectedBorder != null)
             {

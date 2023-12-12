@@ -44,7 +44,7 @@ namespace CodeSnipperManager1a
 
             databaseAccess.DeleteSnippet(deleteSnippet);
             mainWindow.PopulateGrid();
-
+            mainWindow.ClearSelection();
             this.Close();
         }
 

@@ -1,10 +1,13 @@
 ﻿using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
+using System.Globalization;
 
 namespace CodeSnipperManager1a.MVVM.Model
 {
-    #pragma warning disable CS8618
+
+#pragma warning disable CS8618
     public class Snippet
     {
         [BsonId]
@@ -14,6 +17,6 @@ namespace CodeSnipperManager1a.MVVM.Model
         public string? Description { get; set; }
         public string ProgrammingLanguage { get; set; }
         public string CodeSnippet { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow.AddHours(-6);
     }
 }
