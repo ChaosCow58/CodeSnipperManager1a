@@ -20,9 +20,10 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
-using CodeSnipperManager1a.MVVM.ModelView;
+using CodeSnipperManager1a.MVVM.ViewModel;
 using System.Diagnostics;
 
+#pragma warning disable CS8618
 
 namespace CodeSnipperManager1a
 {
@@ -39,7 +40,7 @@ namespace CodeSnipperManager1a
             string textValue = value as string;
             if (!string.IsNullOrEmpty(textValue))
             {
-                var document = new TextDocument();
+                TextDocument document = new TextDocument();
                 document.Text = textValue;
                 return document;
             }
@@ -64,8 +65,7 @@ namespace CodeSnipperManager1a
 
         private string? SnippetId = "";
         private DateTime SnippetDate;
-
-#pragma warning disable CS8618
+        private string LangName = "";
      
         public MainWindow()
         {
@@ -76,12 +76,12 @@ namespace CodeSnipperManager1a
             databaseAccess = new SnippetDatabaseAccess();
             viewModel = new SnippetsViewModel();
 
-
             DataContext = viewModel;
 
             Loaded += MainWindow_Loaded;
 
             PopulateGrid();
+         
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -99,13 +99,16 @@ namespace CodeSnipperManager1a
             List<string> currentFilters = new List<string>();
             currentFilters.Add("");
 
-            foreach (var item in cmFilterMenu.Items)
+            foreach (object? item in cmFilterMenu.Items)
             {
                 if (item is MenuItem menuItem)
                 {
                     if (menuItem.IsChecked == true) 
                     {
-                        currentFilters.Add(menuItem.Tag.ToString());
+                        if (menuItem.Tag != null)
+                        {
+                            currentFilters.Add(menuItem.Tag.ToString());
+                        }
                     }
                     else if (menuItem.IsChecked == false && currentFilters.Count > 1 && currentFilters.Contains(menuItem.Tag.ToString()))
                     {
@@ -113,7 +116,7 @@ namespace CodeSnipperManager1a
                     }
                     if (menuItem.HasItems)
                     {
-                        foreach (var item2 in menuItem.Items)
+                        foreach (object? item2 in menuItem.Items)
                         {
                             if (item2 is MenuItem menuItem2) 
                             {
@@ -212,6 +215,13 @@ namespace CodeSnipperManager1a
                 }
             }
 
+            if (!string.IsNullOrEmpty(LangName))
+            {
+                snippets = snippets
+                    .Where(s => s.ProgrammingLanguage.Contains(LangName))
+                    .ToList();
+            }
+
             if (!string.IsNullOrEmpty(searchText))
             {
                 snippets = snippets
@@ -223,19 +233,6 @@ namespace CodeSnipperManager1a
             snippets.ForEach(snippet => viewModel.Items?.Add(snippet));
         }
 
-        private List<string> ProcessSubMenuItems(MenuItem menuItem)
-        {
-            List<string> result = new List<string>();
-            foreach (var subItem in menuItem.Items)
-            {
-                if (subItem is MenuItem subMenuItem && subMenuItem.IsChecked == true && subMenuItem.Tag != null)
-                {
-                    result.Add(subMenuItem.Tag.ToString());
-                }
-            }
-            return result;
-        }
-
         public async void PopulateGrid()
         {
             Task<List<Snippet>> snippetsTask = databaseAccess.GetSnippets();
@@ -243,8 +240,45 @@ namespace CodeSnipperManager1a
 
             TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
 
+            List<Snippet> originalItems = new List<Snippet>(viewModel.Items);
+
             FilterItems(SearchTextBox?.Text, snippets);
-            
+
+            miProgramminLang.Items.Clear();
+
+           IEnumerable<Snippet>? sortedItems = viewModel.Items
+                .OrderBy(item => item.ProgrammingLanguage)
+                .GroupBy(item => item.ProgrammingLanguage)
+                .Select(group => group.First());
+
+            MenuItem resetLang = new MenuItem
+            {
+                Header = "Reset Langauages",
+                Tag = "",
+                IsCheckable = false,
+
+            };
+
+            resetLang.Click += ResetLangs_MenuItem_Click;
+            miProgramminLang.Items.Add(resetLang);
+
+            Separator splash = new Separator();
+            miProgramminLang.Items.Add(splash);
+
+            foreach (Snippet snippet in sortedItems)
+            {
+               MenuItem menuItem = new MenuItem
+                {
+                    Header = snippet.ProgrammingLanguage,
+                    Tag = snippet.ProgrammingLanguage,
+                    IsCheckable = true,
+                    
+                };
+
+                menuItem.Click += programmingLang_MenuItem_Click;
+
+                miProgramminLang.Items.Add(menuItem);
+            }
 
             UpdateLayout();
         }
@@ -272,9 +306,9 @@ namespace CodeSnipperManager1a
                     return;
                 }
 
-                using (var reader = new XmlTextReader(stream))
+                using (XmlTextReader reader = new XmlTextReader(stream))
                 {
-                    var xshd = HighlightingLoader.LoadXshd(reader);
+                    XshdSyntaxDefinition xshd = HighlightingLoader.LoadXshd(reader);
 
                     // Create a new ViewModel if needed
                     if (viewModel == null)
@@ -356,7 +390,7 @@ namespace CodeSnipperManager1a
                 string? label1 = "";
                 DateTime label2 = new DateTime();
 
-                foreach (var child in ((Canvas)clickedBorder.Child).Children)
+                foreach (object? child in ((Canvas)clickedBorder.Child).Children)
                 {
                     if (child is Label label)
                     {
@@ -458,7 +492,7 @@ namespace CodeSnipperManager1a
 
         private void ClearFilters_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in cmFilterMenu.Items)
+            foreach (object? item in cmFilterMenu.Items)
             {
                 if (item is MenuItem menuItem)
                 {
@@ -468,7 +502,7 @@ namespace CodeSnipperManager1a
                     }
                     if (menuItem.HasItems) 
                     {
-                        foreach (var item2 in menuItem.Items) 
+                        foreach (object? item2 in menuItem.Items) 
                         {
                             if (item2 is MenuItem menuItem2)
                             {
@@ -481,10 +515,12 @@ namespace CodeSnipperManager1a
                     }
                 }
             }
+
+            LangName = null;
             PopulateGrid();
         }
 
-        #region Alphabetical FIlters
+        #region Alphabetical Filters
         private void SortAZ_MenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (miZA.IsChecked == true) 
@@ -507,7 +543,7 @@ namespace CodeSnipperManager1a
         #region Data Filters
         private void today_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in miDateMenu.Items)
+            foreach (object? item in miDateMenu.Items)
             {
                 if (item is MenuItem menuItem && menuItem != sender)
                 {
@@ -522,7 +558,7 @@ namespace CodeSnipperManager1a
 
         private void yesterday_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in miDateMenu.Items)
+            foreach (object? item in miDateMenu.Items)
             {
                 if (item is MenuItem menuItem && menuItem != sender)
                 {
@@ -537,7 +573,7 @@ namespace CodeSnipperManager1a
 
         private void last30Days_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in miDateMenu.Items)
+            foreach (object? item in miDateMenu.Items)
             {
                 if (item is MenuItem menuItem && menuItem != sender)
                 {
@@ -552,7 +588,7 @@ namespace CodeSnipperManager1a
 
         private void thisMonth_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in miDateMenu.Items)
+            foreach (object? item in miDateMenu.Items)
             {
                 if (item is MenuItem menuItem && menuItem != sender)
                 {
@@ -567,7 +603,7 @@ namespace CodeSnipperManager1a
 
         private void lastMonth_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in miDateMenu.Items)
+            foreach (object? item in miDateMenu.Items)
             {
                 if (item is MenuItem menuItem && menuItem != sender)
                 {
@@ -582,7 +618,7 @@ namespace CodeSnipperManager1a
 
         private void thisYear_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in miDateMenu.Items)
+            foreach (object? item in miDateMenu.Items)
             {
                 if (item is MenuItem menuItem && menuItem != sender)
                 {
@@ -597,7 +633,7 @@ namespace CodeSnipperManager1a
 
         private void lastYear_MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in miDateMenu.Items)
+            foreach (object? item in miDateMenu.Items)
             {
                 if (item is MenuItem menuItem && menuItem != sender)
                 {
@@ -609,7 +645,40 @@ namespace CodeSnipperManager1a
             }
             PopulateGrid();
         }
+
         #endregion Date Filters
+
+        #region Programming Langauage Filters
+        private void programmingLang_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem? menuItem1 = e.Source as MenuItem;
+
+            foreach (object? item in miProgramminLang.Items)
+            {
+                if (item is MenuItem menuItem)
+                {
+                    if (menuItem.IsChecked == true && menuItem != sender)
+                    {
+                        menuItem.IsChecked = false;
+                    }
+                    if (menuItem.IsChecked == true && menuItem == sender)
+                    {
+                        LangName = menuItem.Tag.ToString();
+                    }
+                }
+
+            }
+            PopulateGrid();
+        }
+
+        private void ResetLangs_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            LangName = null;
+            PopulateGrid();
+        }
+        #endregion Programming Langauage Filters
         #endregion Filters
+
+
     }
 }

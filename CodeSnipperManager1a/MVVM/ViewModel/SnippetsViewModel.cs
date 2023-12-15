@@ -1,9 +1,12 @@
-﻿using CodeSnipperManager1a.MVVM.Model;
-using ICSharpCode.AvalonEdit.Highlighting;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace CodeSnipperManager1a.MVVM.ModelView
+using ICSharpCode.AvalonEdit.Highlighting;
+
+using CodeSnipperManager1a.MVVM.Model;
+
+
+namespace CodeSnipperManager1a.MVVM.ViewModel
 {
     #pragma warning disable CS8612, CS8618
     public class SnippetsViewModel : INotifyPropertyChanged

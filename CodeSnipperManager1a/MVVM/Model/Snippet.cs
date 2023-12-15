@@ -2,10 +2,11 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
+#pragma warning disable CS8618
+
 namespace CodeSnipperManager1a.MVVM.Model
 {
 
-#pragma warning disable CS8618
     public class Snippet
     {
         [BsonId]
