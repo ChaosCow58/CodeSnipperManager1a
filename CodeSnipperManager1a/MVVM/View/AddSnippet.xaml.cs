@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,7 +8,9 @@ using System.Windows.Media.Imaging;
 using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 
-namespace CodeSnipperManager1a
+#pragma warning disable CS8618, CS8619
+
+namespace CodeSnipperManager1a.MVVM.View
 {
     /// <summary>
     /// Interaction logic for AddSnippet.xaml
@@ -19,19 +21,16 @@ namespace CodeSnipperManager1a
 
         private SnippetDatabaseAccess databaseAccess;
 
-        private MainWindow mainwindow;
 
-        #pragma warning disable CS8618
         public AddSnippet()
         {
             InitializeComponent();
 
-            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/icon.ico"));
+            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/Icons/windowIcon.ico"));
 
             ToolBox.GenerateComboBox(cbProgramLang);
 
             databaseAccess = new SnippetDatabaseAccess();
-            mainwindow = new MainWindow();
 
         }
 
@@ -47,6 +46,7 @@ namespace CodeSnipperManager1a
                 SnippetModel = new Snippet()
                 {
                     Title = TitleTextBox.Text,
+                    UserId = Globals.UserId,
                     Description = DescriptionTextBox.Text == "" ? "No Description" : DescriptionTextBox.Text,
                     ProgrammingLanguage = ToolBox.ParseComboBox(cbProgramLang),
                     CodeSnippet = CodeSnippetBox.Text
@@ -59,14 +59,14 @@ namespace CodeSnipperManager1a
 
                 // Call the PopulateGrid method in the main window
                 mainWindow?.PopulateGrid();
-                
-                this.Close();
+
+                Close();
             }
         }
 
         private void Cancel_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private bool CheckTextBoxes()
@@ -83,7 +83,7 @@ namespace CodeSnipperManager1a
                 TitleBoxError = true;
                 bTitle.BorderBrush = Brushes.Red;
             }
-            if (cbProgramLang.SelectedValue == null) 
+            if (cbProgramLang.SelectedValue == null)
             {
                 ProgrammingLangError = true;
                 bProgramLang.BorderBrush = Brushes.Red;
@@ -124,7 +124,7 @@ namespace CodeSnipperManager1a
                 MessageBox.Show("Please enter a Snippet!");
                 return false;
             }
-            else if (ProgrammingLangError) 
+            else if (ProgrammingLangError)
             {
                 MessageBox.Show("Please select a Programming Langauge!");
                 return false;
@@ -134,3 +134,4 @@ namespace CodeSnipperManager1a
         }
     }
 }
+

@@ -11,10 +11,10 @@
     <None Remove="Assets\background.png" />
     <None Remove="Assets\delete.png" />
     <None Remove="Assets\filter.png" />
-    <None Remove="Assets\icon.ico" />
     <None Remove="Assets\profile.png" />
     <None Remove="Assets\search.png" />
     <None Remove="Assets\update.png" />
+    <None Remove="Assets\windowIcon.ico" />
     <None Remove="Jsons\programmingLangs.json" />
     <None Remove="SyntaxShader\SytnaxHighlight.xshd" />
   </ItemGroup>
@@ -23,7 +23,7 @@
     <Resource Include="Assets\background.png" />
     <Resource Include="Assets\delete.png" />
     <Resource Include="Assets\filter.png" />
-    <Resource Include="Assets\icon.ico" />
+    <Resource Include="Assets\Icons\windowIcon.ico" />
     <Resource Include="Assets\profile.png" />
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />
@@ -35,10 +35,6 @@
     <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MVVM\ViewModel\" />
   </ItemGroup>
 
 </Project>

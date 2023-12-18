@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -142,6 +143,72 @@ namespace CodeSnipperManager1a.Core
             }
 
             return null;
+        }
+
+        public static byte[] GetKey()
+        {
+
+            //This need to be 32 random numbers from 1 to 128
+            byte[] key = { 26, 93, 56, 11, 78, 124, 32, 71, 8, 105, 45, 82, 19, 64, 37, 114, 67, 23, 99, 14, 120, 73, 50, 7, 96, 29, 84, 41, 116, 60, 3, 88 };
+            return key;
+
+        }
+
+        // Encrypts a string using AES
+        public static string Encrypt(string plainText)
+        {
+            int keySize = 256;
+            byte[] key = GetKey();
+
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.KeySize = keySize;
+                aesAlg.Key = key;
+                aesAlg.IV = new byte[aesAlg.BlockSize / 8]; // IV size is same as the block size
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(plainText);
+                        }
+                    }
+                    return Convert.ToBase64String(msEncrypt.ToArray());
+                }
+            }
+        }
+
+        // Decrypts a string using AES
+        public static string Decrypt(string cipherText)
+        {
+
+            int keySize = 256;
+            byte[] key = GetKey();
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.KeySize = keySize;
+                aesAlg.Key = key;
+                aesAlg.IV = new byte[aesAlg.BlockSize / 8]; // IV size is same as the block size
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
         }
     }
 }

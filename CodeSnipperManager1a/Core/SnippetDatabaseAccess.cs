@@ -22,7 +22,8 @@ namespace CodeSnipperManager1a.Core
 
         private IMongoDatabase database;
 
-        private string collectionName = "Details";
+        private const string DetailsCollection = "Details";
+        private const string UserCollection = "Users";
 
         public SnippetDatabaseAccess()
         {
@@ -54,7 +55,7 @@ namespace CodeSnipperManager1a.Core
 
         public async Task<List<Snippet>> GetSnippets() 
         {
-            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(DetailsCollection);
             IAsyncCursor<Snippet> results = await snippets.FindAsync(_ => true );
 
             return results.ToList();
@@ -62,7 +63,7 @@ namespace CodeSnipperManager1a.Core
         
         public async Task<List<Snippet>> GetSnippet(string SnippetId) 
         {
-            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(DetailsCollection);
             IAsyncCursor<Snippet> results = await snippets.FindAsync(snippet => snippet.Id == SnippetId);
 
             return results.ToList();
@@ -70,14 +71,14 @@ namespace CodeSnipperManager1a.Core
 
         public Task CreateSnippet(Snippet snippet) 
         {
-            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(DetailsCollection);
 
             return snippets.InsertOneAsync(snippet);
         }
 
         public Task UpdateSnippet(Snippet snippet) 
         {
-            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(DetailsCollection);
             FilterDefinition<Snippet> filter = Builders<Snippet>.Filter.Eq(s => s.Id, snippet.Id);
 
             return snippets.ReplaceOneAsync(filter, snippet, new ReplaceOptions {IsUpsert = true});
@@ -88,10 +89,53 @@ namespace CodeSnipperManager1a.Core
          */
         public Task DeleteSnippet(Snippet snippet) 
         {
-            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(collectionName);
+            IMongoCollection<Snippet> snippets = GetDBCollection<Snippet>(DetailsCollection);
             FilterDefinition<Snippet> filter = Builders<Snippet>.Filter.Eq(s => s.Id, snippet.Id);
 
             return snippets.DeleteOneAsync(filter);
+        }
+
+        // Users
+        public async Task<List<User>> GetUsers()
+        {
+            IMongoCollection<User> users = GetDBCollection<User>(UserCollection);
+            IAsyncCursor<User> results = await users.FindAsync(_ => true);
+
+            return results.ToList();
+        }
+
+        public async Task<List<User>> GetUser(string UserId)
+        {
+            IMongoCollection<User> users = GetDBCollection<User>(UserCollection);
+            IAsyncCursor<User> results = await users.FindAsync(user => user.Id == UserId);
+
+            return results.ToList();
+        }
+
+        public Task CreateUser(User user)
+        {
+            IMongoCollection<User> users = GetDBCollection<User>(UserCollection);
+
+            return users.InsertOneAsync(user);
+        }
+
+        public Task UpdateUser(User user)
+        {
+            IMongoCollection<User> users = GetDBCollection<User>(UserCollection);
+            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);
+
+            return users.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = true });
+        }
+
+        /*
+         TODO: Move to a junk database then delete it over time
+         */
+        public Task DeleteUser(User user)
+        {
+            IMongoCollection<User> users = GetDBCollection<User>(UserCollection);
+            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);
+
+            return users.DeleteOneAsync(filter);
         }
     }
 }

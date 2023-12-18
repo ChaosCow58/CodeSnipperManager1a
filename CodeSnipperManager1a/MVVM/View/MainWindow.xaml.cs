@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -20,8 +21,8 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
 ﻿using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
+using CodeSnipperManager1a.MVVM.View;
 using CodeSnipperManager1a.MVVM.ViewModel;
-using System.Diagnostics;
 
 #pragma warning disable CS8618
 
@@ -56,12 +57,12 @@ namespace CodeSnipperManager1a
 
     public partial class MainWindow : Window
     {
-        private AddSnippet addWindow;
+        private CodeSnipperManager1a.MVVM.View.AddSnippet addWindow;
         private UpdateSnippet updateWindow;
         private DeleteSnippet deleteWindow;
 
         private SnippetDatabaseAccess databaseAccess;
-        private SnippetsViewModel viewModel;
+        private SnippetsViewModel viewSnippetModel;
 
         private string? SnippetId = "";
         private DateTime SnippetDate;
@@ -71,13 +72,23 @@ namespace CodeSnipperManager1a
         {
             InitializeComponent();
 
-            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/icon.ico"));
+            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/Icons/windowIcon.ico"));
 
             databaseAccess = new SnippetDatabaseAccess();
-            viewModel = new SnippetsViewModel();
+            viewSnippetModel = new SnippetsViewModel();
 
-            DataContext = viewModel;
+            Login loginWindow = new Login();
+            loginWindow.Owner = null;
+            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            loginWindow.ShowDialog();
 
+            if (Globals.UserId == "") 
+            {
+                Close();
+            }
+
+            DataContext = viewSnippetModel;
+             
             Loaded += MainWindow_Loaded;
 
             PopulateGrid();
@@ -229,8 +240,8 @@ namespace CodeSnipperManager1a
                     .ToList();
             }
 
-            viewModel.Items?.Clear();
-            snippets.ForEach(snippet => viewModel.Items?.Add(snippet));
+            viewSnippetModel.Items?.Clear();
+            snippets.ForEach(snippet => viewSnippetModel.Items?.Add(snippet));
         }
 
         public async void PopulateGrid()
@@ -240,13 +251,13 @@ namespace CodeSnipperManager1a
 
             TextBox? SearchTextBox = ToolBox.FindTextBox("SearchBox", tbSearchBox);
 
-            List<Snippet> originalItems = new List<Snippet>(viewModel.Items);
+            snippets = snippets.Where(s => s.UserId == Globals.UserId).ToList();
 
             FilterItems(SearchTextBox?.Text, snippets);
 
             miProgramminLang.Items.Clear();
 
-           IEnumerable<Snippet>? sortedItems = viewModel.Items
+           IEnumerable<Snippet>? sortedItems = viewSnippetModel.Items
                 .OrderBy(item => item.ProgrammingLanguage)
                 .GroupBy(item => item.ProgrammingLanguage)
                 .Select(group => group.First());
@@ -310,15 +321,15 @@ namespace CodeSnipperManager1a
                 {
                     XshdSyntaxDefinition xshd = HighlightingLoader.LoadXshd(reader);
 
-                    // Create a new ViewModel if needed
-                    if (viewModel == null)
+                    // Create a new viewSnippetModel if needed
+                    if (viewSnippetModel == null)
                     {
-                        viewModel = new SnippetsViewModel();
-                        icDataDisplay.DataContext = viewModel;
+                        viewSnippetModel = new SnippetsViewModel();
+                        icDataDisplay.DataContext = viewSnippetModel;
                     }
 
                     // Set SyntaxHighlighting using HighlightingLoader
-                    viewModel.SyntaxHighlighting = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
+                    viewSnippetModel.SyntaxHighlighting = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
                 }
             }
         }
@@ -343,7 +354,7 @@ namespace CodeSnipperManager1a
         #region Window Calls
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            addWindow = new AddSnippet();
+            addWindow = new CodeSnipperManager1a.MVVM.View.AddSnippet();
 
             addWindow.Owner = this;
             addWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -678,7 +689,6 @@ namespace CodeSnipperManager1a
         }
         #endregion Programming Langauage Filters
         #endregion Filters
-
 
     }
 }
