@@ -38,10 +38,7 @@
                                 <MenuItem Name="miAZ" Tag="aToZ" Header="Sort A-Z" IsCheckable="True" Click="SortAZ_MenuItem_Click"/>
                                 <MenuItem Name="miZA" Tag="zToA" Header="Sort Z-A" IsCheckable="True" Click="SortZA_MenuItem_Click"/>
                                 <Separator/>
-                                <MenuItem Name="miProgramminLang" Header="Programming Languages" Tag="">
-                                    <MenuItem Header="Reset Langauages" Click="ResetLangs_MenuItem_Click"/>
-                                    <Separator/>
-                                </MenuItem>
+                                <MenuItem Name="miProgramminLang" Header="Programming Languages" Tag=""/>
                                 <Separator/>
                                 <MenuItem Name="miDateMenu" Header="Date" Tag="">
                                     <MenuItem Tag="today"      Header="Today"        IsCheckable="True" Click="today_MenuItem_Click"/>
@@ -79,7 +76,10 @@
 
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Background="Transparent">
-                <Image Source="../../Assets/profile.png" Height="33" Width="37"/>
+                <Border CornerRadius="35" BorderBrush="Black" BorderThickness="1" Height="32" Width="35">
+                    <Image Source="../../Assets/profile.png" Height="33" Width="37"/>
+                </Border>
+                
                 <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="16,0,0,0" MouseUp="Add_MouseUp">
                     <Label Content="+" Foreground="White" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,-18,0,0"/>
                 </Border>
