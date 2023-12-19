@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using CodeSnipperManager1a.Core;
-using CodeSnipperManager1a.MVVM.ViewModel;
 using CodeSnipperManager1a.MVVM.Model;
 
+#pragma warning disable CS8622
 
 namespace CodeSnipperManager1a.MVVM.View
 {
@@ -18,7 +18,6 @@ namespace CodeSnipperManager1a.MVVM.View
     public partial class Login : Window
     {
         private SnippetDatabaseAccess databaseAccess;
-        private UsersViewModel usersViewModel;
 
         public Login()
         {
@@ -27,7 +26,6 @@ namespace CodeSnipperManager1a.MVVM.View
             Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/Icons/windowIcon.ico"));
 
             databaseAccess = new SnippetDatabaseAccess();
-            usersViewModel = new UsersViewModel();
 
             IniFile iniFile = new IniFile("CodeSnippetManager.ini");
             if (iniFile.GetValue("SECURITY", "USERNAMELOGIN") != "")
@@ -39,6 +37,17 @@ namespace CodeSnipperManager1a.MVVM.View
             else
             {
                 tbusername.Focus();
+            }
+
+            StateChanged += Login_StateChanged;
+        }
+
+        private void Login_StateChanged(object sender, EventArgs e)
+        {
+            // Check if the new state is Minimized, and prevent it by setting it back to Normal
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
             }
         }
 

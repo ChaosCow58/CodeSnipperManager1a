@@ -6,6 +6,8 @@ using System.Windows.Media.Imaging;
 using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 
+#pragma warning disable CS8602
+
 namespace CodeSnipperManager1a
 {
     /// <summary>
@@ -37,12 +39,13 @@ namespace CodeSnipperManager1a
             databaseAccess.DeleteSnippet(deleteSnippet);
             mainWindow.PopulateGrid();
             mainWindow.ClearSelection();
-            this.Close();
+
+            Close();
         }
 
         private void NoDelete_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

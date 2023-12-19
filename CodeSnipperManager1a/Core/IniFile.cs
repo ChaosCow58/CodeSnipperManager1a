@@ -28,11 +28,11 @@ namespace CodeSnipperManager1a.Core
 
             if (!File.Exists(filePath))
             {
-                var file = File.Create(filePath);
+                FileStream? file = File.Create(filePath);
                 file.Close();
             }
 
-            foreach (var line in File.ReadLines(filePath))
+            foreach (string line in File.ReadLines(filePath))
             {
                 if (line.Trim().StartsWith("[") && line.Trim().EndsWith("]"))
                 {
@@ -41,11 +41,11 @@ namespace CodeSnipperManager1a.Core
                 }
                 else if (!string.IsNullOrWhiteSpace(currentSection))
                 {
-                    var parts = line.Split(new[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
+                    string[] parts = line.Split(new[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
                     if (parts.Length == 2)
                     {
-                        var key = parts[0].Trim();
-                        var value = parts[1].Trim();
+                        string key = parts[0].Trim();
+                        string value = parts[1].Trim();
                         sections[currentSection][key] = value;
                     }
                 }
@@ -57,12 +57,12 @@ namespace CodeSnipperManager1a.Core
 
         public void Save()
         {
-            using (var writer = new StreamWriter(filePath))
+            using (StreamWriter writer = new StreamWriter(filePath))
             {
-                foreach (var section in sections)
+                foreach (KeyValuePair<string, Dictionary<string, string>> section in sections)
                 {
                     writer.WriteLine($"[{section.Key}]");
-                    foreach (var entry in section.Value)
+                    foreach (KeyValuePair<string, string> entry in section.Value)
                     {
                         writer.WriteLine($"{entry.Key}={entry.Value}");
                     }
@@ -73,7 +73,7 @@ namespace CodeSnipperManager1a.Core
 
         public string GetValue(string section, string key, string defaultValue = "")
         {
-            if (sections.TryGetValue(section, out var values) && values.TryGetValue(key, out var value))
+            if (sections.TryGetValue(section, out Dictionary<string, string>? values) && values.TryGetValue(key, out string? value))
             {
                 return value;
             }
@@ -83,7 +83,7 @@ namespace CodeSnipperManager1a.Core
 
         public void SetValue(string section, string key, string value)
         {
-            if (!sections.TryGetValue(section, out var values))
+            if (!sections.TryGetValue(section, out Dictionary<string, string>? values))
             {
                 values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 sections[section] = values;

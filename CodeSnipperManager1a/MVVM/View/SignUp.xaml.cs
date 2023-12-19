@@ -1,18 +1,14 @@
-﻿using CodeSnipperManager1a.Core;
-using CodeSnipperManager1a.MVVM.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
+using CodeSnipperManager1a.Core;
+using CodeSnipperManager1a.MVVM.Model;
+
+#pragma warning disable CS8622
 
 namespace CodeSnipperManager1a.MVVM.View
 {
@@ -32,6 +28,17 @@ namespace CodeSnipperManager1a.MVVM.View
 
             databaseAccess = new SnippetDatabaseAccess();
 
+            StateChanged += Login_StateChanged;
+
+        }
+
+        private void Login_StateChanged(object sender, EventArgs e)
+        {
+            // Check if the new state is Minimized, and prevent it by setting it back to Normal
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
+            }
         }
 
         private void Login_MouseUp(object sender, MouseButtonEventArgs e)
@@ -42,24 +49,33 @@ namespace CodeSnipperManager1a.MVVM.View
         private void Cancel_Button(object sender, RoutedEventArgs e)
         {
             Globals.UserId = "";
-            Close();
+            App.Current.Shutdown();
         }
 
-        private void SignUp_Click(object sender, RoutedEventArgs e)
+        private async void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            string encryptedPassword = ToolBox.Encrypt(pbpassword.Password); 
+            Task<List<User>> usersTask = databaseAccess.GetUsers();
+            List<User> users = await usersTask;
+            string encryptedPassword = ToolBox.Encrypt(pbpassword.Password);
 
-            User user = new User
+            foreach (User user in users) 
+            {
+                if (user.Username == tbusername.Text) 
+                {
+                    MessageBox.Show("That Username already exists!");
+                    return;
+                }
+            }
+
+            User NewUser = new User
             { 
                 Username = tbusername.Text,
                 Password = encryptedPassword,
                 Email = tbemail.Text
             };
 
-            databaseAccess.CreateUser(user);
+            databaseAccess?.CreateUser(NewUser);
             Close();
         }
-
-  
     }
 }

@@ -9,6 +9,8 @@ using System.Windows.Media.Imaging;
 using CodeSnipperManager1a.Core;
 using CodeSnipperManager1a.MVVM.Model;
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+
 namespace CodeSnipperManager1a
 {
     /// <summary>
@@ -58,6 +60,7 @@ namespace CodeSnipperManager1a
                     ProgrammingLanguage = ToolBox.ParseComboBox(cbProgramLang),
                     CreatedAt = mainWindow.GetSnippetDate()
                 };
+
 
 
                 databaseAccess.UpdateSnippet(updatedSnippet);

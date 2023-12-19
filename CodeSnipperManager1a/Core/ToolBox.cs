@@ -77,7 +77,7 @@ namespace CodeSnipperManager1a.Core
 
             for (int i = 0; i < comboBox.Items.Count; i++)
             {
-                string itemText = comboBox.Items[i].ToString();
+                string? itemText = comboBox.Items[i].ToString();
                 if (itemText.StartsWith(programmingLanguage))
                 {
                     selectedIndex = i;
@@ -125,17 +125,17 @@ namespace CodeSnipperManager1a.Core
         {
             if (container == null) return null;
 
-            var childCount = VisualTreeHelper.GetChildrenCount(container);
+            int childCount = VisualTreeHelper.GetChildrenCount(container);
             for (int i = 0; i < childCount; i++)
             {
-                var child = VisualTreeHelper.GetChild(container, i);
+                DependencyObject child = VisualTreeHelper.GetChild(container, i);
 
                 if (child is TextBox textBox && textBox.Name == name)
                 {
                     return textBox;
                 }
 
-                var result = FindTextBox(name, child);
+                TextBox result = FindTextBox(name, child);
                 if (result != null)
                 {
                     return result;

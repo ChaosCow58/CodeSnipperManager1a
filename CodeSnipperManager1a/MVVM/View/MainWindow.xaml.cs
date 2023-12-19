@@ -34,11 +34,12 @@ namespace CodeSnipperManager1a
     /// 
     public class TextToDocumentConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // Your conversion logic here
             // Example: Convert value (assumed to be string) to TextDocument
-            string textValue = value as string;
+            string? textValue = value as string;
+
             if (!string.IsNullOrEmpty(textValue))
             {
                 TextDocument document = new TextDocument();
@@ -66,7 +67,7 @@ namespace CodeSnipperManager1a
 
         private string? SnippetId = "";
         private DateTime SnippetDate;
-        private string LangName = "";
+        private string? LangName = "";
      
         public MainWindow()
         {
@@ -101,13 +102,13 @@ namespace CodeSnipperManager1a
         }
 
         #region Populate Data
-        private void FilterItems(string searchText, List<Snippet> snippets)
+        private void FilterItems(string? searchText, List<Snippet> snippets)
         {
 
             DateTime dateStart = new DateTime();
             DateTime dateEnd = new DateTime();
 
-            List<string> currentFilters = new List<string>();
+            List<string?> currentFilters = new List<string?>();
             currentFilters.Add("");
 
             foreach (object? item in cmFilterMenu.Items)
@@ -146,7 +147,7 @@ namespace CodeSnipperManager1a
             }
 
 
-            foreach (string filter in currentFilters)
+            foreach (string? filter in currentFilters)
             {
                 Debug.WriteLine($"Filters: {filter}");
 
@@ -309,7 +310,7 @@ namespace CodeSnipperManager1a
         private void LoadSyntaxDefinition(string xshdFileName)
         {
             Assembly assembly = typeof(MainWindow).Assembly;
-            using (Stream stream = assembly.GetManifestResourceStream($"CodeSnipperManager1a.SyntaxShader.{xshdFileName}"))
+            using (Stream? stream = assembly.GetManifestResourceStream($"CodeSnipperManager1a.SyntaxShader.{xshdFileName}"))
             {
                 if (stream == null)
                 {
@@ -423,11 +424,14 @@ namespace CodeSnipperManager1a
             }
         }
 
-        public string? GetSnippetId() 
+#pragma warning disable CS8603
+        public string GetSnippetId() 
         {
             return SnippetId;
-        }    
-        
+        }
+#pragma warning restore CS8603
+
+
         public DateTime GetSnippetDate() 
         {
             return SnippetDate;
