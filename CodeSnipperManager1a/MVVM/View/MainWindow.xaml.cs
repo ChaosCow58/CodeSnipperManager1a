@@ -58,7 +58,8 @@ namespace CodeSnipperManager1a
 
     public partial class MainWindow : Window
     {
-        private CodeSnipperManager1a.MVVM.View.AddSnippet addWindow;
+        private Profile profileWindow;
+        private AddSnippet addWindow;
         private UpdateSnippet updateWindow;
         private DeleteSnippet deleteWindow;
 
@@ -353,9 +354,18 @@ namespace CodeSnipperManager1a
         #endregion Top Bar
 
         #region Window Calls
+        private void Profile_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            profileWindow = new Profile();
+
+            profileWindow.Owner = this;
+            profileWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            profileWindow.ShowDialog();
+        }
+
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            addWindow = new CodeSnipperManager1a.MVVM.View.AddSnippet();
+            addWindow = new AddSnippet();
 
             addWindow.Owner = this;
             addWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -692,7 +702,7 @@ namespace CodeSnipperManager1a
             PopulateGrid();
         }
         #endregion Programming Langauage Filters
-        #endregion Filters
 
+        #endregion Filters
     }
 }

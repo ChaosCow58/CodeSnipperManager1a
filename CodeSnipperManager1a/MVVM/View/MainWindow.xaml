@@ -76,19 +76,20 @@
 
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Background="Transparent">
-                <Border CornerRadius="35" BorderBrush="Black" BorderThickness="1" Height="32" Width="35">
-                    <Image Source="../../Assets/profile.png" Height="33" Width="37"/>
+
+                <Border Margin="5,0,0,0" CornerRadius="35" Height="30" Width="30" MouseUp="Profile_MouseUp">
+                    <Image Source="../../Assets/profile.png" Height="33" Width="37" Margin="-5,-3,-5,-3"/>
                 </Border>
-                
+
                 <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="16,0,0,0" MouseUp="Add_MouseUp">
                     <Label Content="+" Foreground="White" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-3,-18,0,0"/>
                 </Border>
 
-                <Border Name="btUpdate" Panel.ZIndex="3" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Update_MouseUp">
+                <Border x:Name="btUpdate" Panel.ZIndex="3" Visibility="Hidden" Background="#87CEEB" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Update_MouseUp">
                     <Image Source="../../Assets/update.png" Margin="4,3,4,3"/>
                 </Border>
 
-                <Border Name="btDelete" Visibility="Hidden" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Delete_MouseUp">
+                <Border x:Name="btDelete" Visibility="Hidden" Background="#DC3737" CornerRadius="6" Height="28" Width="29" Margin="4,0,0,0" MouseUp="Delete_MouseUp">
                     <Image Source="../../Assets/delete.png" Margin="2,2,2,2"/>
                 </Border>
             </StackPanel>
