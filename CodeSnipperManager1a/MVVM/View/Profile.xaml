@@ -5,8 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeSnipperManager1a.MVVM.View"
         mc:Ignorable="d"
-        Title="Profile" Height="350" Width="700">
-    <Grid>
-        
+        Title="Profile" Height="300" Width="650" WindowStyle="None" ResizeMode="NoResize">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Grid.Column="0" Background="LightGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"/>
+                <RowDefinition/>
+                <RowDefinition Height="56"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="Gray" BorderThickness="0,0,0,2" Grid.Row="0">
+                <StackPanel>
+                    <Border Height="26" MouseUp="ExitProfile_MouseUp" MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../Assets/profile.png" Height="21" Width="23"/>
+                            <Label Content="Exit Profile"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Row="1">
+                <Border MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
+                    <StackPanel Margin="3" Orientation="Horizontal">
+                        <Border Height="26" Width="26" CornerRadius="25" BorderBrush="Black">
+                            <Image Name="imMenuProfile" Source="{Binding ProfileImage}" Margin="-5,-3,-5,-3" />
+                        </Border>
+                        <Label Content="Profile" FontSize="13"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <Border BorderBrush="Gray" BorderThickness="0,2,0,0" Grid.Row="2">
+                <StackPanel>
+                    <Border Height="26" MouseUp="LogOff_MouseUp" MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../Assets/profile.png" Height="21" Width="23"/>
+                            <Label Content="Log off" Foreground="Red"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Height="27" MouseUp="ExitApp_MouseUp" MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../Assets/profile.png" Height="21" Width="23"/>
+                            <Label Content="Exit Application" Foreground="Red"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Border />
+        </Grid>
+
     </Grid>
 </Window>
