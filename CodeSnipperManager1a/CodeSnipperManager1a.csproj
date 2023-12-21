@@ -10,7 +10,10 @@
   <ItemGroup>
     <None Remove="Assets\background.png" />
     <None Remove="Assets\delete.png" />
+    <None Remove="Assets\exitApp.png" />
+    <None Remove="Assets\exitProfile.png" />
     <None Remove="Assets\filter.png" />
+    <None Remove="Assets\logOff.png" />
     <None Remove="Assets\profile.png" />
     <None Remove="Assets\search.png" />
     <None Remove="Assets\update.png" />
@@ -21,10 +24,15 @@
 
   <ItemGroup>
     <Resource Include="Assets\background.png" />
+    <Resource Include="Assets\exitApp.png" />
+    <Resource Include="Assets\exitProfile.png" />
     <Resource Include="Assets\delete.png" />
+    <Resource Include="Assets\logOff.png" />
     <Resource Include="Assets\filter.png" />
     <Resource Include="Assets\Icons\windowIcon.ico" />
-    <Resource Include="Assets\profile.png" />
+    <Content Include="Profile\defaultProfile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />
     <EmbeddedResource Include="Jsons\programmingLangs.json" />

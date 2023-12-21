@@ -5,7 +5,7 @@ using CodeSnipperManager1a.MVVM.Model;
 
 namespace CodeSnipperManager1a.MVVM.ViewModel
 {
-    class UsersViewModel : INotifyPropertyChanged
+    public class UsersViewModel : INotifyPropertyChanged
     {
 		private ObservableCollection<User> _items;
 

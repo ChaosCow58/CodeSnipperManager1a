@@ -33,6 +33,7 @@ namespace CodeSnipperManager1a.MVVM.View
             databaseAccess = new SnippetDatabaseAccess();
 
             DataContext = userViewModel;
+            SetImages();
         }
 
         private async void SetImages() 
@@ -42,10 +43,9 @@ namespace CodeSnipperManager1a.MVVM.View
 
             foreach (User user in userList) 
             {
-                imMenuProfile.Source = (ImageSource)FindResource(user.ProfileImage);
+                userList.ForEach(user => userViewModel.Items.Add(user));
             }
 
-            userList.ForEach(u => userViewModel.Items.Add(u));
         }
 
         private void Bottom_MouseEnter(object sender, MouseEventArgs e)

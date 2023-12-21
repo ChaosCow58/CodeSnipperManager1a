@@ -78,7 +78,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Background="Transparent">
 
                 <Border Margin="5,0,0,0" CornerRadius="35" Height="30" Width="30" MouseUp="Profile_MouseUp">
-                    <Image Source="../../Assets/profile.png" Height="33" Width="37" Margin="-5,-3,-5,-3"/>
+                    <Image Name="imProfile" Height="33" Width="37" Margin="-5,-3,-5,-3"/>
                 </Border>
 
                 <Border Background="#33B249" CornerRadius="6" Height="28" Width="29" Margin="16,0,0,0" MouseUp="Add_MouseUp">

@@ -24,8 +24,8 @@
                 <StackPanel>
                     <Border Height="26" MouseUp="ExitProfile_MouseUp" MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../../Assets/profile.png" Height="21" Width="23"/>
-                            <Label Content="Exit Profile"/>
+                            <Image Source="../../Assets/exitProfile.png" Height="21" Width="23"/>
+                            <Label Content="Exit Profile" Foreground="DodgerBlue"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -35,7 +35,7 @@
                 <Border MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
                     <StackPanel Margin="3" Orientation="Horizontal">
                         <Border Height="26" Width="26" CornerRadius="25" BorderBrush="Black">
-                            <Image Name="imMenuProfile" Source="{Binding ProfileImage}" Margin="-5,-3,-5,-3" />
+                            <Image Name="imMenuProfile" Source="{Binding DataContext.ProfileImage}" Margin="-5,-3,-5,-3" />
                         </Border>
                         <Label Content="Profile" FontSize="13"/>
                     </StackPanel>
@@ -46,13 +46,13 @@
                 <StackPanel>
                     <Border Height="26" MouseUp="LogOff_MouseUp" MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../../Assets/profile.png" Height="21" Width="23"/>
+                            <Image Margin="3,0,0,0" Source="../../Assets/logOff.png" Height="18" Width="19"/>
                             <Label Content="Log off" Foreground="Red"/>
                         </StackPanel>
                     </Border>
                     <Border Height="27" MouseUp="ExitApp_MouseUp" MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../../Assets/profile.png" Height="21" Width="23"/>
+                            <Image Margin="2,0,0,0" Source="../../Assets/exitApp.png" Height="20" Width="20"/>
                             <Label Content="Exit Application" Foreground="Red"/>
                         </StackPanel>
                     </Border>

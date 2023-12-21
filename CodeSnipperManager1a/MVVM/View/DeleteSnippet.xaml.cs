@@ -35,7 +35,7 @@ namespace CodeSnipperManager1a
             {
                 Id = mainWindow.GetSnippetId()
             };
-
+ 
             databaseAccess.DeleteSnippet(deleteSnippet);
             mainWindow.PopulateGrid();
             mainWindow.ClearSelection();

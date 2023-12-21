@@ -64,6 +64,7 @@ namespace CodeSnipperManager1a
         private DeleteSnippet deleteWindow;
 
         private SnippetDatabaseAccess databaseAccess;
+
         private SnippetsViewModel viewSnippetModel;
 
         private string? SnippetId = "";
@@ -77,6 +78,7 @@ namespace CodeSnipperManager1a
             Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/Icons/windowIcon.ico"));
 
             databaseAccess = new SnippetDatabaseAccess();
+
             viewSnippetModel = new SnippetsViewModel();
 
             Login loginWindow = new Login();
@@ -89,12 +91,25 @@ namespace CodeSnipperManager1a
                 Close();
             }
 
+            imProfile.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/Profile/defaultProfile.png"));
+
             DataContext = viewSnippetModel;
              
             Loaded += MainWindow_Loaded;
 
             PopulateGrid();
          
+        }
+
+        public async void SetImages()
+        {
+            Task<List<User>> userTask = databaseAccess.GetUser(Globals.UserId);
+            List<User> userList = await userTask;
+
+            foreach (User user in userList)
+            {
+                imProfile.Source = new BitmapImage(new Uri("pack://siteoforigin:,,,/" + user.ProfileImage));
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
