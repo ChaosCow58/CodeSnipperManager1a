@@ -66,6 +66,7 @@ namespace CodeSnipperManager1a
         private SnippetDatabaseAccess databaseAccess;
 
         private SnippetsViewModel viewSnippetModel;
+        private UsersViewModel viewUserModel;
 
         private string? SnippetId = "";
         private DateTime SnippetDate;
@@ -80,6 +81,7 @@ namespace CodeSnipperManager1a
             databaseAccess = new SnippetDatabaseAccess();
 
             viewSnippetModel = new SnippetsViewModel();
+            viewUserModel = new UsersViewModel();
 
             Login loginWindow = new Login();
             loginWindow.Owner = null;

@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Assets\background.png" />
     <None Remove="Assets\delete.png" />
+    <None Remove="Assets\edit.png" />
     <None Remove="Assets\exitApp.png" />
     <None Remove="Assets\exitProfile.png" />
     <None Remove="Assets\filter.png" />
@@ -17,6 +18,8 @@
     <None Remove="Assets\profile.png" />
     <None Remove="Assets\search.png" />
     <None Remove="Assets\update.png" />
+    <None Remove="Assets\visibleOff.png" />
+    <None Remove="Assets\visibleOn.png" />
     <None Remove="Assets\windowIcon.ico" />
     <None Remove="Jsons\programmingLangs.json" />
     <None Remove="SyntaxShader\SytnaxHighlight.xshd" />
@@ -24,6 +27,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\background.png" />
+    <Resource Include="Assets\edit.png" />
     <Resource Include="Assets\exitApp.png" />
     <Resource Include="Assets\exitProfile.png" />
     <Resource Include="Assets\delete.png" />
@@ -35,6 +39,8 @@
     </Content>
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />
+    <Resource Include="Assets\visibleOff.png" />
+    <Resource Include="Assets\visibleOn.png" />
     <EmbeddedResource Include="Jsons\programmingLangs.json" />
     <EmbeddedResource Include="SyntaxShader\SytnaxHighlight.xshd" />
   </ItemGroup>

@@ -29,10 +29,14 @@ namespace CodeSnipperManager1a.MVVM.View
         {
             InitializeComponent();
 
+
             userViewModel = new UsersViewModel();
             databaseAccess = new SnippetDatabaseAccess();
 
+
             DataContext = userViewModel;
+
+
             SetImages();
         }
 
@@ -45,6 +49,7 @@ namespace CodeSnipperManager1a.MVVM.View
             {
                 userList.ForEach(user => userViewModel.Items.Add(user));
             }
+
 
         }
 

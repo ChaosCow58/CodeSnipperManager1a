@@ -71,7 +71,7 @@ namespace CodeSnipperManager1a.MVVM.View
             { 
                 Username = tbusername.Text,
                 Password = encryptedPassword,
-                ProfileImage = "Profile/defaultProfile.png",
+                ProfileImage = "pack://siteoforigin:,,,/Profile/defaultProfile.png",
                 Email = tbemail.Text
             };
 

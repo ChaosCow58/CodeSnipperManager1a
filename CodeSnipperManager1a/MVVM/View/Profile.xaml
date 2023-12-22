@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeSnipperManager1a.MVVM.View"
         mc:Ignorable="d"
-        Title="Profile" Height="300" Width="650" WindowStyle="None" ResizeMode="NoResize">
+        Title="Profile" Height="300" Width="460" WindowStyle="None" ResizeMode="NoResize">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
@@ -34,9 +34,15 @@
             <StackPanel Grid.Row="1">
                 <Border MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
                     <StackPanel Margin="3" Orientation="Horizontal">
-                        <Border Height="26" Width="26" CornerRadius="25" BorderBrush="Black">
-                            <Image Name="imMenuProfile" Source="{Binding DataContext.ProfileImage}" Margin="-5,-3,-5,-3" />
-                        </Border>
+                        <ItemsControl ItemsSource="{Binding Items}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Height="26" Width="26" CornerRadius="25" BorderBrush="Black">
+                                        <Image Name="imMenuProfile" Source="{Binding ProfileImage}" Margin="-5,-3,-5,-3" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                         <Label Content="Profile" FontSize="13"/>
                     </StackPanel>
                 </Border>
@@ -61,7 +67,18 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <Border />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
         </Grid>
 
     </Grid>
