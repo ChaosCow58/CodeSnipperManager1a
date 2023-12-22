@@ -66,20 +66,83 @@
             </Border>
         </Grid>
 
-        <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-        </Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="51.67"/>
+                            <RowDefinition Height="51.67"/>
+                            <RowDefinition Height="51.67"/>
+                            <RowDefinition Height="45"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Border Margin="10" CornerRadius="55" BorderThickness="2" BorderBrush="Black" Height="79" Width="83">
+                                <Image Source="{Binding ProfileImage}" Margin="-9,-9,-9,-11"/>
+                            </Border>
+
+                            <Border Margin="-12,0,0,65" Background="LightGray" CornerRadius="3" BorderBrush="Transparent" Height="15" Width="15">
+                                <Image Source="../../Assets/edit.png" Margin="1,0,1,0"/>
+                            </Border>
+                        </StackPanel>
+
+
+                        <StackPanel Grid.Column="1" Margin="0,0,-150,0">
+                            <Label Margin="0,5,7,0" Content="User Id" Width="173" FontWeight="Bold" FontSize="12"/>
+                            <Label Margin="0,-8,6,0" Content="{Binding Id}" Width="173" FontSize="10"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,-150,51" Grid.RowSpan="2">
+                            <Label Content="Username" FontWeight="Bold"/>
+                            <Border CornerRadius="5" BorderThickness="1" BorderBrush="Black" Background="LightGray" Width="333">
+                                <TextBox BorderBrush="Transparent" Text="{Binding Username}" Background="LightGray" Height="19" Margin="3,0,0,0"/>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,-150,51" Grid.RowSpan="2">
+                            <Label Content="Email" FontWeight="Bold"/>
+                            <Border CornerRadius="5" BorderThickness="1" BorderBrush="Black" Background="LightGray" Width="333">
+                                <TextBox BorderBrush="Transparent" Text="{Binding Email}" Background="LightGray" Height="19" Margin="3,0,0,0"/>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="0,51,-150,0" Grid.RowSpan="2">
+                            <Label Content="Password" FontWeight="Bold"/>
+                            <Border CornerRadius="5" BorderThickness="1" BorderBrush="Black" Background="LightGray" Width="332" Height="21">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="25"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Visibility="Collapsed" BorderBrush="Transparent" Text="{Binding Password}" Background="LightGray" Margin="3,0,0,0"/>
+                                    <Image Visibility="Collapsed" Source="../../Assets/visibleOff.png" Margin="276,0,-28,0" Grid.ColumnSpan="2"/> 
+                                    
+                                    <PasswordBox BorderBrush="Transparent" Password="{Binding Password}" Background="LightGray" Margin="3,0,0,0"/>
+                                    <Image Source="../../Assets/visibleOn.png" Margin="276,0,-28,0" Grid.ColumnSpan="2"/>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+
+                        <Border Grid.Row="4" Grid.ColumnSpan="2" Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" CornerRadius="3" BorderBrush="Black" BorderThickness="1" Background="Red" Height="25" Width="110">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="../../Assets/delete.png"/>
+                                <Label Content="Delete Account" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10"/>
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
     </Grid>
 </Window>
