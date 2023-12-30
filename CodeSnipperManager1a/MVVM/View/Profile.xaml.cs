@@ -3,6 +3,7 @@ using CodeSnipperManager1a.MVVM.Model;
 using CodeSnipperManager1a.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
 
 namespace CodeSnipperManager1a.MVVM.View
 {
@@ -29,6 +31,7 @@ namespace CodeSnipperManager1a.MVVM.View
         {
             InitializeComponent();
 
+            Icon = new BitmapImage(new Uri("pack://application:,,,../../Assets/Icons/windowIcon.ico"));
 
             userViewModel = new UsersViewModel();
             databaseAccess = new SnippetDatabaseAccess();
@@ -89,6 +92,52 @@ namespace CodeSnipperManager1a.MVVM.View
         private void ExitProfile_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Close();
+        }
+
+        private async void EditProfile_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            string userDowloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Downloads\");
+            
+            OpenFileDialog fileDialog = new OpenFileDialog 
+            {
+                Title = "Select a Profile Image",
+                InitialDirectory = userDowloadPath,
+                Filter = "Image Files (*.png, *.jpeg, *.jpg, *.ico, *.gif, *.tiff, *bmp) | *.png;*.jpeg;*.jpg;*.ico;*.gif;*.tiff;*.bmp"
+            };
+
+            bool? result = fileDialog.ShowDialog();
+
+            Task<List<User>> userTask = databaseAccess.GetUser(Globals.UserId);
+            List<User> userList = await userTask;
+
+            if (result == true) 
+            {
+                File.Copy(fileDialog.FileName, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "Profile", Path.GetFileName(fileDialog.FileName)), true);
+
+                foreach (User user in userList)
+                {
+                    User updateUser = new User
+                    {
+                        Id = Globals.UserId,
+                        Username = user.Username,
+                        Email = user.Email,
+                        ProfileImage = "pack://siteoforigin:,,,/Profile/" + Path.GetFileName(fileDialog.FileName),
+                        Password = user.Password
+                    };
+
+                    await databaseAccess.UpdateUser(updateUser);
+                }
+               
+                SetImages();
+                UpdateLayout();
+            }
+        }
+
+        private void Edit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Border border = (Border)e.Source;
+
+            border.Background = Brushes.LightGray;
         }
     }
 }

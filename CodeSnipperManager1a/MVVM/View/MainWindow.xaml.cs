@@ -377,7 +377,7 @@ namespace CodeSnipperManager1a
 
             profileWindow.Owner = this;
             profileWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-             profileWindow.ShowDialog();
+            profileWindow.ShowDialog();
         }
 
         private void Add_MouseUp(object sender, MouseButtonEventArgs e)
