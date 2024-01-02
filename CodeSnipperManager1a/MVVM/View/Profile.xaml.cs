@@ -97,7 +97,7 @@ namespace CodeSnipperManager1a.MVVM.View
         private async void EditProfile_MouseUp(object sender, MouseButtonEventArgs e)
         {
             string userDowloadPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"Downloads\");
-            
+
             OpenFileDialog fileDialog = new OpenFileDialog 
             {
                 Title = "Select a Profile Image",
@@ -107,12 +107,14 @@ namespace CodeSnipperManager1a.MVVM.View
 
             bool? result = fileDialog.ShowDialog();
 
+            string profileDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Profile", Path.GetFileName(fileDialog.FileName));
+
             Task<List<User>> userTask = databaseAccess.GetUser(Globals.UserId);
             List<User> userList = await userTask;
 
             if (result == true) 
             {
-                File.Copy(fileDialog.FileName, Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "Profile", Path.GetFileName(fileDialog.FileName)), true);
+                File.Copy(fileDialog.FileName, profileDirectory, true);
 
                 foreach (User user in userList)
                 {
@@ -127,7 +129,9 @@ namespace CodeSnipperManager1a.MVVM.View
 
                     await databaseAccess.UpdateUser(updateUser);
                 }
-               
+
+                userViewModel.Items.Clear();
+
                 SetImages();
                 UpdateLayout();
             }
@@ -138,6 +142,26 @@ namespace CodeSnipperManager1a.MVVM.View
             Border border = (Border)e.Source;
 
             border.Background = Brushes.LightGray;
+        }
+
+        private void DeleteAccount_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult confirmantion = MessageBox.Show("Are you sure you want to DELETE your account?");
+
+            if (confirmantion == MessageBoxResult.Yes) 
+            {
+                MessageBoxResult confirmantionTwo = MessageBox.Show("Are you really sure you want to DELETE your account?");
+
+                if (confirmantionTwo == MessageBoxResult.Yes) 
+                {
+                    User deleteUser = new User
+                    {
+                        Id = Globals.UserId,
+                    };
+
+                    databaseAccess.DeleteUser(deleteUser);
+                }
+            }
         }
     }
 }

@@ -34,9 +34,9 @@
     <Resource Include="Assets\logOff.png" />
     <Resource Include="Assets\filter.png" />
     <Resource Include="Assets\Icons\windowIcon.ico" />
-    <Content Include="Profile\defaultProfile.png">
+    <EmbeddedResource Include="Profile\defaultProfile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Resource Include="Assets\search.png" />
     <Resource Include="Assets\update.png" />
     <Resource Include="Assets\visibleOff.png" />

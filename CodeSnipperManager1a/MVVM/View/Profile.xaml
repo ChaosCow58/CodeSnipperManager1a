@@ -34,12 +34,14 @@
             <StackPanel Grid.Row="1">
                 <Border MouseEnter="Bottom_MouseEnter" MouseLeave="Bottom_MouseLeave">
                     <StackPanel Margin="3" Orientation="Horizontal">
-                        <ItemsControl ItemsSource="{Binding Items}">
+                        <ItemsControl Name="icSideBarProifleImage" ItemsSource="{Binding Items}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Height="26" Width="26" CornerRadius="25" BorderBrush="Black">
-                                        <Image Name="imMenuProfile" Source="{Binding ProfileImage}" Margin="-5,-3,-5,-3" />
-                                    </Border>
+                                    <StackPanel>
+                                        <Border Panel.ZIndex="1" Height="26" Width="26" CornerRadius="25" BorderBrush="Black">
+                                            <Image Name="imMenuProfile" Source="{Binding ProfileImage}" Margin="-5,-3,-5,-3" />
+                                        </Border>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -66,7 +68,7 @@
             </Border>
         </Grid>
 
-        <ItemsControl Grid.Column="1" ItemsSource="{Binding Items}">
+        <ItemsControl Name="icProfieEdit" Grid.Column="1" ItemsSource="{Binding Items}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Grid.Column="1">
@@ -84,8 +86,8 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Orientation="Horizontal">
-                            <Border Margin="10" CornerRadius="55" BorderThickness="2" BorderBrush="Black" Height="79" Width="83">
-                                <Image Source="{Binding ProfileImage}" Margin="-9,-9,-9,-11"/>
+                            <Border ClipToBounds="True" Margin="10" CornerRadius="55" BorderThickness="2" Panel.ZIndex="2" BorderBrush="Black" Height="79" Width="83">
+                                 <Image Source="{Binding ProfileImage}"/>
                             </Border>
 
                             <Border Margin="-12,0,0,65" Background="LightGray" CornerRadius="3" BorderBrush="Transparent" Height="15" Width="15" MouseUp="EditProfile_MouseUp" MouseEnter="Bottom_MouseEnter" MouseLeave="Edit_MouseLeave">
@@ -132,7 +134,9 @@
                             </Border>
                         </StackPanel>
 
-                        <Border Grid.Row="4" Grid.ColumnSpan="2" Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" CornerRadius="3" BorderBrush="Black" BorderThickness="1" Background="Red" Height="25" Width="110">
+                        <Border Grid.Row="4" Grid.ColumnSpan="2" Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                CornerRadius="3" BorderBrush="Black" BorderThickness="1" Background="Red" Height="25" Width="110"
+                                MouseUp="DeleteAccount_MouseUp">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="../../Assets/delete.png"/>
                                 <Label Content="Delete Account" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10"/>
